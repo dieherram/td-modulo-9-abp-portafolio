@@ -18,10 +18,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
     <style>
       :root {
         --bg-deep: #0f1b14;
@@ -739,6 +736,187 @@
           margin-top: 1rem;
         }
       }
+
+      /* === SVG Icon Styles === */
+      .icon {
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.125em;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+      }
+
+      .icon-sm {
+        width: 0.875em;
+        height: 0.875em;
+      }
+
+      .icon-lg {
+        width: 1.8rem;
+        height: 1.8rem;
+      }
+
+      .badge-pill .icon {
+        color: #ffd54a;
+      }
+
+      .value-card .icon {
+        font-size: 1.8rem;
+        color: var(--secondary);
+        margin-bottom: 1rem;
+        width: 1.8rem;
+        height: 1.8rem;
+      }
+
+      .mini-social a .icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .eyebrow .icon {
+        width: 14px;
+        height: 14px;
+      }
+
+      .project-links .icon {
+        width: 14px;
+        height: 14px;
+        margin-left: 4px;
+        transition: transform 0.2s ease;
+      }
+
+      .project-links a:hover .icon {
+        transform: translate(2px, -2px);
+      }
+
+      .project-tag .icon {
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+        opacity: 0.7;
+      }
+
+      /* === Animations === */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0%, 100% {
+          box-shadow: 0 0 0 0 rgba(255, 204, 0, 0);
+        }
+        50% {
+          box-shadow: 0 0 20px 4px rgba(255, 204, 0, 0.15);
+        }
+      }
+
+      @keyframes subtleBounce {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      .eyebrow {
+        animation: pulseGlow 3s ease-in-out infinite;
+      }
+
+      .hero-actions .btn-primary-custom {
+        animation: subtleBounce 3s ease-in-out infinite;
+        animation-delay: 1s;
+      }
+
+      .hero-stats .stat-box {
+        animation: fadeInUp 0.8s ease-out backwards;
+      }
+
+      .hero-stats .stat-box:nth-child(1) { animation-delay: 0.3s; }
+      .hero-stats .stat-box:nth-child(2) { animation-delay: 0.5s; }
+      .hero-stats .stat-box:nth-child(3) { animation-delay: 0.7s; }
+
+      .mini-social a {
+        transition: transform 0.3s ease, background 0.3s ease;
+      }
+
+      .mini-social a:hover {
+        animation: float 1s ease-in-out;
+      }
+
+      .contact-box {
+        background-size: 200% 200%;
+        animation: gradientShift 6s ease infinite;
+      }
+
+      /* === AOS Overrides === */
+      [data-aos] {
+        pointer-events: auto !important;
+      }
+
+      .badge-pill .icon,
+      .value-card .icon,
+      .mini-social a .icon,
+      .project-links .icon {
+        transition: transform 0.3s ease;
+      }
+
+      .badge-pill:hover .icon,
+      .value-card:hover .icon {
+        transform: scale(1.2);
+      }
+
+      /* === Reduced Motion === */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        html {
+          scroll-behavior: auto;
+        }
+
+        [data-aos] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -779,28 +957,28 @@
 
       <div class="hero-content">
         <div class="hero-copy">
-          <div class="eyebrow"><i class="fa-solid fa-code"></i> Full Stack JavaScript & UX/UI</div>
-          <h1>
+          <div class="eyebrow" data-aos="fade-up" data-aos-delay="200"><svg class="icon" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg> Full Stack JavaScript & UX/UI</div>
+          <h1 data-aos="fade-up" data-aos-delay="300">
             Desarrollo <span class="highlight">soluciones digitales</span><br />
             con claridad, impacto y experiencia de usuario.
           </h1>
-          <p class="lead">
+          <p class="lead" data-aos="fade-up" data-aos-delay="400">
             Soy Diego Hernández, profesional de marketing con formación en desarrollo web full stack,
             enfocado en construir productos digitales útiles, bien diseñados y orientados a resultados.
           </p>
 
-          <div class="hero-actions">
+          <div class="hero-actions" data-aos="fade-up" data-aos-delay="500">
             <a href="#proyectos" class="btn btn-primary-custom">Explorar proyectos</a>
             <a href="#contacto" class="btn btn-outline-custom">Contactar</a>
           </div>
 
-          <div class="mini-social" aria-label="Redes sociales">
-            <a href="https://github.com/dieherram" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-            <a href="https://linkedin.com/in/diego-hernandez-ramos" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="mailto:diego.hernandez@example.com" aria-label="Correo"><i class="fa-solid fa-envelope"></i></a>
+          <div class="mini-social" aria-label="Redes sociales" data-aos="fade-up" data-aos-delay="600">
+            <a href="https://github.com/dieherram" target="_blank" rel="noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+            <a href="https://linkedin.com/in/diego-hernandez-ramos" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="mailto:diego.hernandez@example.com" aria-label="Correo"><svg class="icon" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></a>
           </div>
 
-          <div class="hero-stats">
+          <div class="hero-stats" data-aos="fade-up" data-aos-delay="700">
             <div class="stat-box">
               <strong>+6</strong>
               <span>proyectos construidos</span>
@@ -822,15 +1000,15 @@
       <section class="section" id="sobre-mi">
         <div class="container-wide">
           <div class="text-center">
-            <h2 class="section-title">Sobre mí</h2>
-            <p class="section-subtitle">
+            <h2 class="section-title" data-aos="fade-up">Sobre mí</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
               Combino tecnología, diseño y estrategia para crear experiencias digitales que conectan
               necesidades del usuario con objetivos del negocio.
             </p>
           </div>
 
           <div class="row g-4 align-items-stretch about-story">
-            <div class="col-lg-7">
+            <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
               <div class="about-card glass">
                 <p>
                   Soy profesional de marketing con formación en Desarrollo Full Stack JavaScript y Diseño UX/UI.
@@ -843,14 +1021,14 @@
                   proyectos desde múltiples perspectivas: usuario, negocio y tecnología.
                 </p>
                 <div class="profile-badges">
-                  <span class="badge-pill"><i class="fa-solid fa-code"></i> Frontend</span>
-                  <span class="badge-pill"><i class="fa-solid fa-server"></i> Backend</span>
-                  <span class="badge-pill"><i class="fa-solid fa-pen-ruler"></i> UX/UI</span>
-                  <span class="badge-pill"><i class="fa-solid fa-chart-line"></i> Marketing digital</span>
+                  <span class="badge-pill"><svg class="icon" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg> Frontend</span>
+                  <span class="badge-pill"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg> Backend</span>
+                  <span class="badge-pill"><svg class="icon" viewBox="0 0 24 24"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg> UX/UI</span>
+                  <span class="badge-pill"><svg class="icon" viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg> Marketing digital</span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-5" data-aos="fade-left" data-aos-delay="300">
               <div class="about-highlight" aria-label="Resumen ejecutivo del perfil profesional">
                 <span class="label">Perfil clave</span>
                 <h3>Marketing, producto y tecnología en una sola mirada.</h3>
@@ -872,15 +1050,15 @@
       <section class="section" id="proyectos">
         <div class="container-wide">
           <div class="text-center">
-            <h2 class="section-title">Proyectos destacados</h2>
-            <p class="section-subtitle">
+            <h2 class="section-title" data-aos="fade-up">Proyectos destacados</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
               Desarrollo web y full stack con foco en funcionalidad, claridad de código y una experiencia
               visual sólida para usuarios y equipos.
             </p>
           </div>
 
           <div class="projects-grid">
-            <article class="project-card">
+            <article class="project-card" data-aos="fade-up" data-aos-delay="100">
               <div id="carouselMiPokedex" class="carousel slide project-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselMiPokedex" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -920,14 +1098,14 @@
                 </p>
                 <div class="project-links">
                   <a href="https://github.com/dieherram/td-modulo-3-4-abp-pokedex" target="_blank" rel="noreferrer">
-                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                   </a>
-                  <span><i class="fa-solid fa-star"></i> Curso</span>
+                  <span><svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Curso</span>
                 </div>
               </div>
             </article>
 
-            <article class="project-card">
+            <article class="project-card" data-aos="fade-up" data-aos-delay="200">
               <div id="carouselAlkyWallet" class="carousel slide project-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselAlkyWallet" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -967,14 +1145,14 @@
                 </p>
                 <div class="project-links">
                   <a href="https://github.com/dieherram/td-modulo-2-abp-alky-wallet" target="_blank" rel="noreferrer">
-                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                   </a>
-                  <span><i class="fa-solid fa-graduation-cap"></i> Curso</span>
+                  <span><svg class="icon" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg> Curso</span>
                 </div>
               </div>
             </article>
 
-            <article class="project-card">
+            <article class="project-card" data-aos="fade-up" data-aos-delay="300">
               <div id="carouselCocteles" class="carousel slide project-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselCocteles" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -1014,14 +1192,14 @@
                 </p>
                 <div class="project-links">
                   <a href="https://github.com/dieherram/dl-react-i-consumo-de-apis-con-react" target="_blank" rel="noreferrer">
-                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                   </a>
-                  <span><i class="fa-solid fa-rocket"></i> Paralelo</span>
+                  <span><svg class="icon" viewBox="0 0 24 24"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg> Paralelo</span>
                 </div>
               </div>
             </article>
 
-            <article class="project-card">
+            <article class="project-card" data-aos="fade-up" data-aos-delay="100">
               <div id="carouselMammaMia" class="carousel slide project-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselMammaMia" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -1061,14 +1239,14 @@
                 </p>
                 <div class="project-links">
                   <a href="https://github.com/dieherram/dl-react-ii-trabajo-practico" target="_blank" rel="noreferrer">
-                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                   </a>
-                  <span><i class="fa-solid fa-briefcase"></i> Paralelo</span>
+                  <span><svg class="icon" viewBox="0 0 24 24"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg> Paralelo</span>
                 </div>
               </div>
             </article>
 
-            <article class="project-card">
+            <article class="project-card" data-aos="fade-up" data-aos-delay="200">
               <div id="carouselSoftJobs" class="carousel slide project-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselSoftJobs" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -1108,14 +1286,14 @@
                 </p>
                 <div class="project-links">
                   <a href="https://github.com/dieherram/dl-backend-con-node-y-express-autenticacion-y-autorizacion-de-usuarios-con-jwt" target="_blank" rel="noreferrer">
-                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                   </a>
-                  <span><i class="fa-solid fa-server"></i> Backend</span>
+                  <span><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg> Backend</span>
                 </div>
               </div>
             </article>
 
-            <article class="project-card">
+            <article class="project-card" data-aos="fade-up" data-aos-delay="300">
               <div id="carouselVanillaReact" class="carousel slide project-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselVanillaReact" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -1154,8 +1332,8 @@
                   realizado en JavaScript vanilla, resaltando la evolución de la arquitectura frontend.
                 </p>
                 <div class="project-links">
-                  <a href="#caso-estudio">Leer análisis <i class="fa-solid fa-arrow-right"></i></a>
-                  <span><i class="fa-solid fa-lightbulb"></i> Estrategia</span>
+                  <a href="#caso-estudio">Leer análisis <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                  <span><svg class="icon" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> Estrategia</span>
                 </div>
               </div>
             </article>
@@ -1166,14 +1344,14 @@
       <section class="section" id="caso-estudio">
         <div class="container-wide">
           <div class="text-center">
-            <h2 class="section-title">De Vanilla JS a React</h2>
-            <p class="section-subtitle">
+            <h2 class="section-title" data-aos="fade-up">De Vanilla JS a React</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
               Un salto de madurez técnica: pasar de manipular manualmente el DOM y duplicar lógica entre páginas,
               hacia una arquitectura modular, reutilizable y más predecible.
             </p>
           </div>
 
-          <div class="case-study-wrap">
+          <div class="case-study-wrap" data-aos="fade-up" data-aos-delay="200">
             <div class="case-grid">
               <div class="case-text">
                 <h3>Repensando la arquitectura frontend</h3>
@@ -1219,26 +1397,26 @@
       <section class="section">
         <div class="container-wide">
           <div class="text-center">
-            <h2 class="section-title">Qué puedo aportar</h2>
-            <p class="section-subtitle">
+            <h2 class="section-title" data-aos="fade-up">Qué puedo aportar</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
               Me interesa formar parte de equipos donde pueda combinar código, experiencia de usuario y estrategia
               digital para generar soluciones útiles y escalables.
             </p>
           </div>
 
           <div class="value-grid">
-            <div class="value-card glass">
-              <i class="fa-solid fa-laptop-code"></i>
+            <div class="value-card glass" data-aos="fade-up" data-aos-delay="200">
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
               <h4>Desarrollo frontend</h4>
               <p>Interfaces responsivas, buenas prácticas accesibles y lógica de interacción con JavaScript y React.</p>
             </div>
-            <div class="value-card glass">
-              <i class="fa-solid fa-server"></i>
+            <div class="value-card glass" data-aos="fade-up" data-aos-delay="300">
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
               <h4>Backend y APIs</h4>
               <p>Construcción de servicios con Express, autenticación JWT y gestión de datos con PostgreSQL.</p>
             </div>
-            <div class="value-card glass">
-              <i class="fa-solid fa-pen-ruler"></i>
+            <div class="value-card glass" data-aos="fade-up" data-aos-delay="400">
+              <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
               <h4>UX/UI y producto</h4>
               <p>Diseño centrado en el usuario, coherencia visual y comunicación clara de la propuesta de valor.</p>
             </div>
@@ -1248,7 +1426,7 @@
 
       <section class="section" id="contacto">
         <div class="container-wide">
-          <div class="contact-box">
+          <div class="contact-box" data-aos="zoom-in" data-aos-delay="200">
             <div class="row align-items-center g-4">
               <div class="col-lg-8">
                 <h3>¿Buscas un perfil que combine desarrollo, UX y visión de negocio?</h3>
@@ -1281,5 +1459,14 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 700,
+        once: true,
+        offset: 80,
+        easing: 'ease-out-cubic'
+      });
+    </script>
   </body>
 </html>
