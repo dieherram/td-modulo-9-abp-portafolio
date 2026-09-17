@@ -13,6 +13,8 @@ El objetivo de este proyecto es presentar una mirada integral sobre mi trabajo: 
 
 ## Vista previa
 
+**Portafolio desplegado:** [https://dieherram.github.io/td-modulo-9-abp-portafolio/](https://dieherram.github.io/td-modulo-9-abp-portafolio/)
+
 El landing page utiliza un video de fondo en formatos WebM y MP4 para mejorar la compatibilidad entre navegadores.
 
 <video controls muted playsinline width="100%">
@@ -111,6 +113,7 @@ El objetivo fue separar responsabilidades entre datos, negocio y presentación, 
 
 ```text
 assets/
+├── icons/     # Iconos SVG de Lucide para la interfaz
 ├── images/    # Capturas optimizadas de los proyectos en formato JPEG
 └── videos/    # Video del hero en WebM y MP4
 ```
@@ -131,7 +134,7 @@ Después, abre la URL indicada por el servidor para visualizar el portafolio.
 
 - [LinkedIn](https://linkedin.com/in/diego-hernandez-ramos)
 - [GitHub](https://github.com/dieherram)
-- [Portafolio](./index.html)
+- [Portafolio en línea](https://dieherram.github.io/td-modulo-9-abp-portafolio/)
 
 ---
 
