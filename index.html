@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portafolio de Diego Hernández, desarrollador Full Stack JavaScript con enfoque en UX/UI, marketing digital y experiencia de usuario."
+    />
+    <title>Diego Hernández | Portafolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-deep: #0f1b14;
+        --bg-mid: #162f21;
+        --bg-soft: #1f3f2c;
+        --panel: rgba(22, 41, 31, 0.78);
+        --panel-soft: rgba(19, 31, 24, 0.72);
+        --primary: #009B4D;
+        --primary-2: #3ecf7b;
+        --secondary: #FFCC00;
+        --accent: #f7b948;
+        --marfil: #FAF5E9;
+        --text: #f8f3ea;
+        --muted: #dfe9dc;
+        --muted-strong: #c9d7c9;
+        --border: rgba(250, 245, 233, 0.14);
+        --shadow: 0 24px 60px rgba(4, 15, 9, 0.5);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Manrope", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(0, 155, 77, 0.22), transparent 26%),
+          radial-gradient(circle at top right, rgba(255, 204, 0, 0.12), transparent 18%),
+          linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 100%);
+        color: var(--text);
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .container-wide {
+        width: min(1200px, calc(100% - 2rem));
+        margin: 0 auto;
+      }
+
+      .section-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        margin-bottom: 0.9rem;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        max-width: 700px;
+        margin: 0 auto 2.75rem auto;
+        line-height: 1.7;
+        font-size: 1.04rem;
+      }
+
+      .glass {
+        background: rgba(25, 21, 31, 0.72);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: #0e0b12;
+        padding-bottom: 1.5rem;
+      }
+
+      .hero video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.4) saturate(0.85) contrast(1.18) blur(0.15px);
+      }
+
+      .hero .overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(10, 8, 15, 0.88) 0%, rgba(10, 8, 15, 0.72) 26%, rgba(10, 8, 15, 0.48) 54%, rgba(10, 8, 15, 0.7) 100%),
+          linear-gradient(180deg, rgba(10, 8, 15, 0.2), rgba(10, 8, 15, 0.78));
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        width: min(1300px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding-top: 7rem;
+        padding-bottom: 1.5rem;
+      }
+
+      .hero-copy {
+        width: min(100%, 980px);
+        max-width: 980px;
+        padding-right: clamp(1rem, 2vw, 3rem);
+      }
+
+      .navbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        min-height: 84px;
+        background: rgba(8, 23, 16, 0.18);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(250, 245, 233, 0.08);
+      }
+
+      .navbar .container-wide {
+        min-height: 84px;
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-brand {
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .navbar-nav {
+        align-items: center;
+      }
+
+      .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-weight: 500;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus {
+        color: #ffffff !important;
+      }
+
+      .btn-primary-custom {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border: none;
+        color: #0d1b13;
+        font-weight: 800;
+        padding: 0.9rem 1.6rem;
+        border-radius: 999px;
+        box-shadow: 0 16px 35px rgba(0, 155, 77, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      }
+
+      .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 40px rgba(255, 204, 0, 0.26);
+        filter: brightness(1.05);
+      }
+
+      .btn-outline-custom {
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: white;
+        font-weight: 600;
+        padding: 0.9rem 1.6rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        border: 1px solid rgba(255, 204, 0, 0.5);
+        background: rgba(0, 155, 77, 0.18);
+        color: var(--marfil);
+        border-radius: 999px;
+        padding: 0.6rem 1rem;
+        font-size: 0.74rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        font-weight: 700;
+        backdrop-filter: blur(6px);
+      }
+
+      .hero h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(3.15rem, 5.2vw, 5.6rem);
+        line-height: 0.9;
+        font-weight: 700;
+        letter-spacing: -0.065em;
+        margin: 1.2rem 0 1rem;
+        max-width: 100%;
+        text-wrap: balance;
+      }
+
+      .hero h1 .highlight {
+        color: #ffd54a;
+        text-shadow: 0 0 18px rgba(255, 204, 0, 0.15);
+      }
+
+      .hero .lead {
+        max-width: 100%;
+        color: rgba(245, 240, 234, 0.9);
+        font-size: clamp(1rem, 1.5vw, 1.14rem);
+        line-height: 1.75;
+        text-wrap: pretty;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .mini-social {
+        display: flex;
+        gap: 0.9rem;
+        margin-top: 2rem;
+      }
+
+      .mini-social a {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: white;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      .mini-social a:hover {
+        background: rgba(124, 58, 237, 0.35);
+        transform: translateY(-2px);
+      }
+
+      .hero-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.4rem;
+        margin-top: 2.2rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .stat-box {
+        min-width: 140px;
+        padding: 1rem 1.25rem;
+        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.42);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .stat-box strong {
+        display: block;
+        font-size: 1.7rem;
+        font-weight: 800;
+      }
+
+      .stat-box span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .section {
+        padding: 4.75rem 0;
+      }
+
+      .about-story {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .about-story > [class*="col-"] {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+      }
+
+      .about-card {
+        padding: 2.25rem;
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(14, 26, 40, 0.96), rgba(11, 22, 17, 0.82));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: var(--shadow);
+      }
+
+      .about-card p {
+        font-size: 1.03rem;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .profile-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 1.4rem;
+      }
+
+      .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(0, 155, 77, 0.12);
+        color: white;
+        border: 1px solid rgba(255, 204, 0, 0.24);
+        font-weight: 600;
+      }
+
+      .badge-pill i {
+        color: #ffd54a;
+      }
+
+      .about-highlight {
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 30px;
+        background: linear-gradient(180deg, rgba(19, 42, 51, 0.9), rgba(9, 16, 20, 0.96));
+        border: 1px solid rgba(255, 204, 0, 0.28);
+        padding: 2rem 1.75rem;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .about-highlight::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top left, rgba(255, 204, 0, 0.18), transparent 42%);
+        pointer-events: none;
+      }
+
+      .about-highlight .label {
+        display: inline-block;
+        width: fit-content;
+        padding: 0.45rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 700;
+        background: rgba(255, 204, 0, 0.12);
+        border: 1px solid rgba(255, 204, 0, 0.3);
+        color: #ffe78a;
+        margin-bottom: 1rem;
+      }
+
+      .about-highlight h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(1.8rem, 2vw, 2.4rem);
+        line-height: 1.1;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        margin-bottom: 1rem;
+      }
+
+      .about-highlight p {
+        color: var(--muted);
+        line-height: 1.75;
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .about-highlight ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.75rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .about-highlight li {
+        position: relative;
+        padding-left: 1.4rem;
+        color: var(--muted);
+      }
+
+      .about-highlight li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--secondary);
+        font-size: 1.3rem;
+        line-height: 1;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 1.6rem;
+      }
+
+      .project-card {
+        grid-column: span 4;
+        display: flex;
+        flex-direction: column;
+        background: rgba(13, 27, 42, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .project-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255, 204, 0, 0.38);
+      }
+
+      .project-carousel {
+        position: relative;
+        background: rgba(9, 12, 18, 0.9);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .project-carousel .carousel-item img {
+        display: block;
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+      }
+
+      .project-carousel .carousel-indicators {
+        margin-bottom: 0.45rem;
+      }
+
+      .project-carousel .carousel-indicators [data-bs-target] {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.75);
+      }
+
+      .project-carousel .carousel-control-prev,
+      .project-carousel .carousel-control-next {
+        width: 12%;
+        opacity: 1;
+      }
+
+      .project-carousel .carousel-control-prev-icon,
+      .project-carousel .carousel-control-next-icon {
+        width: 1.4rem;
+        height: 1.4rem;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+      }
+
+      .project-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1.5rem 1.45rem 1.7rem;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .project-tag {
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        font-size: 0.72rem;
+        padding: 0.38rem 0.7rem;
+      }
+
+      .project-card h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.1;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        margin-bottom: 0.8rem;
+      }
+
+      .project-card p {
+        color: var(--muted);
+        line-height: 1.72;
+        margin-bottom: 1.2rem;
+      }
+
+      .project-links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .project-links a {
+        color: #dfe9ff;
+        font-weight: 600;
+      }
+
+      .project-links a:hover {
+        color: #ffffff;
+      }
+
+      .case-study-wrap {
+        background: rgba(8, 17, 31, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 30px;
+        padding: 2.2rem;
+        overflow: hidden;
+      }
+
+      .case-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 0.9fr;
+        gap: 2rem;
+      }
+
+      .case-text h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        margin-bottom: 1rem;
+      }
+
+      .case-text p,
+      .case-text li {
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 1rem;
+      }
+
+      .case-text ul {
+        padding-left: 1.2rem;
+        margin-top: 1rem;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .metric {
+        padding: 1.3rem;
+        border-radius: 20px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .value-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.4rem;
+      }
+
+      .value-card {
+        padding: 1.5rem;
+        border-radius: 22px;
+        background: rgba(14, 23, 38, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .value-card i {
+        font-size: 1.8rem;
+        color: var(--secondary);
+        margin-bottom: 1rem;
+      }
+
+      .value-card h4 {
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+      }
+
+      .value-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .contact-box {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(45, 212, 191, 0.12));
+        border: 1px solid rgba(167, 139, 250, 0.4);
+        border-radius: 30px;
+        padding: 2.3rem;
+      }
+
+      .contact-box h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2.4rem, 3vw, 3rem);
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        margin-bottom: 0.9rem;
+      }
+
+      .contact-box p {
+        color: #dfe9ff;
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+      }
+
+      .contact-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      footer {
+        padding: 2rem 0 3rem;
+        color: var(--muted);
+      }
+
+      .footer-inner {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      @media (max-width: 991px) {
+        .hero {
+          min-height: auto;
+          padding-bottom: 0.75rem;
+        }
+
+        .hero-content {
+          padding-top: 5.8rem;
+          padding-bottom: 0.8rem;
+        }
+
+        .hero-copy {
+          width: 100%;
+          max-width: 100%;
+          padding-right: 0;
+        }
+
+        .section {
+          padding: 4rem 0;
+        }
+
+        .project-card {
+          grid-column: span 6;
+        }
+
+        .case-grid,
+        .value-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .hero {
+          min-height: auto;
+          padding-bottom: 0.5rem;
+        }
+
+        .hero-content {
+          padding-top: 5.25rem;
+          padding-bottom: 0.65rem;
+        }
+
+        .hero-stats {
+          margin-top: 1.8rem;
+        }
+
+        .section {
+          padding: 3.5rem 0;
+        }
+
+        .about-highlight {
+          min-height: auto;
+          padding: 1.5rem 1.2rem;
+        }
+
+        .project-card {
+          grid-column: span 12;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .navbar-collapse {
+          background: rgba(7, 17, 31, 0.95);
+          border-radius: 16px;
+          padding: 1rem;
+          margin-top: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero" id="inicio">
+      <video autoplay muted loop playsinline preload="metadata" aria-label="Video de fondo del portafolio">
+        <source src="./assets/videos/hero-background.webm" type="video/webm" />
+        <source src="./assets/videos/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay"></div>
+
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-wide">
+          <a class="navbar-brand text-white" href="#inicio">DIEGO H.</a>
+          <button
+            class="navbar-toggler border-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-lg-center gap-lg-3">
+              <li class="nav-item"><a class="nav-link" href="#sobre-mi">Sobre mí</a></li>
+              <li class="nav-item"><a class="nav-link" href="#proyectos">Proyectos</a></li>
+              <li class="nav-item"><a class="nav-link" href="#caso-estudio">Caso de estudio</a></li>
+              <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+              <li class="nav-item">
+                <a class="btn btn-primary-custom ms-lg-2" href="#proyectos">Ver portafolio</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+          <div class="eyebrow"><i class="fa-solid fa-code"></i> Full Stack JavaScript & UX/UI</div>
+          <h1>
+            Desarrollo <span class="highlight">soluciones digitales</span><br />
+            con claridad, impacto y experiencia de usuario.
+          </h1>
+          <p class="lead">
+            Soy Diego Hernández, profesional de marketing con formación en desarrollo web full stack,
+            enfocado en construir productos digitales útiles, bien diseñados y orientados a resultados.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#proyectos" class="btn btn-primary-custom">Explorar proyectos</a>
+            <a href="#contacto" class="btn btn-outline-custom">Contactar</a>
+          </div>
+
+          <div class="mini-social" aria-label="Redes sociales">
+            <a href="https://github.com/dieherram" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://linkedin.com/in/diego-hernandez-ramos" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="mailto:diego.hernandez@example.com" aria-label="Correo"><i class="fa-solid fa-envelope"></i></a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-box">
+              <strong>+6</strong>
+              <span>proyectos construidos</span>
+            </div>
+            <div class="stat-box">
+              <strong>3</strong>
+              <span>especialidades clave</span>
+            </div>
+            <div class="stat-box">
+              <strong>100%</strong>
+              <span>orientado a producto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="sobre-mi">
+        <div class="container-wide">
+          <div class="text-center">
+            <h2 class="section-title">Sobre mí</h2>
+            <p class="section-subtitle">
+              Combino tecnología, diseño y estrategia para crear experiencias digitales que conectan
+              necesidades del usuario con objetivos del negocio.
+            </p>
+          </div>
+
+          <div class="row g-4 align-items-stretch about-story">
+            <div class="col-lg-7">
+              <div class="about-card glass">
+                <p>
+                  Soy profesional de marketing con formación en Desarrollo Full Stack JavaScript y Diseño UX/UI.
+                  Mi enfoque está en crear soluciones digitales con sentido de producto, buena experiencia de usuario
+                  y una sólida base técnica.
+                </p>
+                <p>
+                  He trabajado con HTML, CSS, JavaScript, React, React Native, Node.js, Express, PostgreSQL y Bootstrap,
+                  además de herramientas de diseño y contenido. La combinación de estas habilidades me permite entender
+                  proyectos desde múltiples perspectivas: usuario, negocio y tecnología.
+                </p>
+                <div class="profile-badges">
+                  <span class="badge-pill"><i class="fa-solid fa-code"></i> Frontend</span>
+                  <span class="badge-pill"><i class="fa-solid fa-server"></i> Backend</span>
+                  <span class="badge-pill"><i class="fa-solid fa-pen-ruler"></i> UX/UI</span>
+                  <span class="badge-pill"><i class="fa-solid fa-chart-line"></i> Marketing digital</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="about-highlight" aria-label="Resumen ejecutivo del perfil profesional">
+                <span class="label">Perfil clave</span>
+                <h3>Marketing, producto y tecnología en una sola mirada.</h3>
+                <p>
+                  Mi valor no está solo en escribir código, sino en entender el contexto del negocio,
+                  la experiencia del usuario y la estrategia detrás de cada solución digital.
+                </p>
+                <ul>
+                  <li>Diseño de soluciones con enfoque en usuarios y objetivos de negocio.</li>
+                  <li>Desarrollo Full Stack con capacidad para conectar frontend, backend y UX.</li>
+                  <li>Visión comercial y analítica para crear productos con mejor impacto.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="proyectos">
+        <div class="container-wide">
+          <div class="text-center">
+            <h2 class="section-title">Proyectos destacados</h2>
+            <p class="section-subtitle">
+              Desarrollo web y full stack con foco en funcionalidad, claridad de código y una experiencia
+              visual sólida para usuarios y equipos.
+            </p>
+          </div>
+
+          <div class="projects-grid">
+            <article class="project-card">
+              <div id="carouselMiPokedex" class="carousel slide project-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselMiPokedex" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselMiPokedex" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselMiPokedex" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="./assets/images/01%20Mi%20Pokedex.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Mi Pokédex vista principal" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/02%20Mi%20Pokedex.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Mi Pokédex detalle de busqueda" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/03%20Mi%20Pokedex.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Mi Pokédex estadísticas" />
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselMiPokedex" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselMiPokedex" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+              <div class="project-content">
+                <div class="project-tags">
+                  <span class="project-tag">JavaScript</span>
+                  <span class="project-tag">Bootstrap</span>
+                  <span class="project-tag">PokéAPI</span>
+                </div>
+                <h3>Mi Pokédex</h3>
+                <p>
+                  Aplicación para buscar, registrar y visualizar estadísticas de Pokémon consumidos desde la PokéAPI,
+                  con persistencia local y gráficos interactivos de estadísticas base.
+                </p>
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/td-modulo-3-4-abp-pokedex" target="_blank" rel="noreferrer">
+                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                  <span><i class="fa-solid fa-star"></i> Curso</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div id="carouselAlkyWallet" class="carousel slide project-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselAlkyWallet" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselAlkyWallet" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselAlkyWallet" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="./assets/images/01%20Alky%20Wallet.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Alky Wallet login" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/02%20Alky%20Wallet.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Alky Wallet dashboard" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/03%20Alky%20Wallet.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Alky Wallet historial" />
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselAlkyWallet" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselAlkyWallet" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+              <div class="project-content">
+                <div class="project-tags">
+                  <span class="project-tag">HTML5</span>
+                  <span class="project-tag">CSS3</span>
+                  <span class="project-tag">JavaScript</span>
+                </div>
+                <h3>Alky Wallet</h3>
+                <p>
+                  Simulador de billetera digital con inicio de sesión, depósitos, transferencias e historial de transacciones,
+                  validaciones de formulario y lógica frontend en un flujo de interacción clara.
+                </p>
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/td-modulo-2-abp-alky-wallet" target="_blank" rel="noreferrer">
+                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                  <span><i class="fa-solid fa-graduation-cap"></i> Curso</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div id="carouselCocteles" class="carousel slide project-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselCocteles" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselCocteles" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselCocteles" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="./assets/images/01%20Cocteles%20con%20React.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Cócteles con React inicio" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/02%20Cocteles%20con%20React.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Cócteles con React filtrado" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/03%20Cocteles%20con%20React.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Cócteles con React detalle" />
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselCocteles" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselCocteles" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+              <div class="project-content">
+                <div class="project-tags">
+                  <span class="project-tag">React</span>
+                  <span class="project-tag">Bootstrap</span>
+                  <span class="project-tag">API</span>
+                </div>
+                <h3>Cócteles con React</h3>
+                <p>
+                  Aplicación que consume una API pública de cócteles, con búsqueda, filtrado por categoría y selección al azar,
+                  desarrollada con componentes reutilizables y diseño responsivo.
+                </p>
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/dl-react-i-consumo-de-apis-con-react" target="_blank" rel="noreferrer">
+                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                  <span><i class="fa-solid fa-rocket"></i> Paralelo</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div id="carouselMammaMia" class="carousel slide project-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselMammaMia" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselMammaMia" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselMammaMia" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="./assets/images/01%20Mamma%20Mia.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Mamma Mia catálogo" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/02%20Mamma%20Mia.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Mamma Mia detalle" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/03%20Mamma%20Mia.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Mamma Mia carrito" />
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselMammaMia" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselMammaMia" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+              <div class="project-content">
+                <div class="project-tags">
+                  <span class="project-tag">React</span>
+                  <span class="project-tag">Router</span>
+                  <span class="project-tag">Context API</span>
+                </div>
+                <h3>Mamma Mia!</h3>
+                <p>
+                  E-commerce de pizzas con catálogo, detalle del producto y carrito de compras, usando React Router para
+                  ruteo y Context API para la gestión del estado global.
+                </p>
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/dl-react-ii-trabajo-practico" target="_blank" rel="noreferrer">
+                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                  <span><i class="fa-solid fa-briefcase"></i> Paralelo</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div id="carouselSoftJobs" class="carousel slide project-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselSoftJobs" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselSoftJobs" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselSoftJobs" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="./assets/images/01%20Soft%20Jobs%20API.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Soft Jobs API documentación" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/02%20Soft%20Jobs%20API.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Soft Jobs API auth" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/03%20Soft%20Jobs%20API.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Soft Jobs API flujo de usuarios" />
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselSoftJobs" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselSoftJobs" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+              <div class="project-content">
+                <div class="project-tags">
+                  <span class="project-tag">Node.js</span>
+                  <span class="project-tag">Express</span>
+                  <span class="project-tag">JWT</span>
+                </div>
+                <h3>Soft Jobs API</h3>
+                <p>
+                  API backend para una plataforma de empleos junior con autenticación por JWT, contraseñas encriptadas,
+                  gestión de usuarios y middlewares de autorización.
+                </p>
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/dl-backend-con-node-y-express-autenticacion-y-autorizacion-de-usuarios-con-jwt" target="_blank" rel="noreferrer">
+                    Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                  <span><i class="fa-solid fa-server"></i> Backend</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div id="carouselVanillaReact" class="carousel slide project-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselVanillaReact" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselVanillaReact" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselVanillaReact" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="./assets/images/01%20Cocteles%20con%20React.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Caso de estudio React" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/01%20Alky%20Wallet.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Caso de estudio Alky Wallet" />
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/02%20Cocteles%20con%20React.jpg" class="d-block w-100" loading="lazy" decoding="async" alt="Comparación de arquitectura" />
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselVanillaReact" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselVanillaReact" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+              <div class="project-content">
+                <div class="project-tags">
+                  <span class="project-tag">React</span>
+                  <span class="project-tag">UX</span>
+                  <span class="project-tag">Arquitectura</span>
+                </div>
+                <h3>De Vanilla JS a React</h3>
+                <p>
+                  Caso de estudio que compara la lógica de la app de cócteles construida con React y un proyecto previo
+                  realizado en JavaScript vanilla, resaltando la evolución de la arquitectura frontend.
+                </p>
+                <div class="project-links">
+                  <a href="#caso-estudio">Leer análisis <i class="fa-solid fa-arrow-right"></i></a>
+                  <span><i class="fa-solid fa-lightbulb"></i> Estrategia</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="caso-estudio">
+        <div class="container-wide">
+          <div class="text-center">
+            <h2 class="section-title">De Vanilla JS a React</h2>
+            <p class="section-subtitle">
+              Un salto de madurez técnica: pasar de manipular manualmente el DOM y duplicar lógica entre páginas,
+              hacia una arquitectura modular, reutilizable y más predecible.
+            </p>
+          </div>
+
+          <div class="case-study-wrap">
+            <div class="case-grid">
+              <div class="case-text">
+                <h3>Repensando la arquitectura frontend</h3>
+                <p>
+                  El mayor desafío técnico no fue consumir la API, sino cambiar la forma de pensar la interfaz.
+                  En Alky Wallet, cada vista llevaba su propia lógica y duplicación; en React, el proyecto se estructuró
+                  como un sistema de componentes reutilizables con estado centralizado y una lógica mucho más clara.
+                </p>
+                <p>
+                  El objetivo fue separar responsabilidades entre datos, negocio y presentación, aplicando buenas prácticas de
+                  organización de código y mejorando la escalabilidad del proyecto.
+                </p>
+                <ul>
+                  <li><strong>Enfoque de componentes:</strong> buscador, filtros, tarjetas y detalle de producto.</li>
+                  <li><strong>Estado más predecible:</strong> flujo unidireccional y datos centralizados.</li>
+                  <li><strong>Mejor mantenibilidad:</strong> módulos dedicados para consumo de APIs y lógica de UI.</li>
+                </ul>
+              </div>
+
+              <div class="metrics">
+                <div class="metric">
+                  <strong>5</strong>
+                  <span>páginas independientes en Alky Wallet</span>
+                </div>
+                <div class="metric">
+                  <strong>1</strong>
+                  <span>vista principal en React</span>
+                </div>
+                <div class="metric">
+                  <strong>4</strong>
+                  <span>componentes reutilizables</span>
+                </div>
+                <div class="metric">
+                  <strong>90%</strong>
+                  <span>menos duplicación funcional</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container-wide">
+          <div class="text-center">
+            <h2 class="section-title">Qué puedo aportar</h2>
+            <p class="section-subtitle">
+              Me interesa formar parte de equipos donde pueda combinar código, experiencia de usuario y estrategia
+              digital para generar soluciones útiles y escalables.
+            </p>
+          </div>
+
+          <div class="value-grid">
+            <div class="value-card glass">
+              <i class="fa-solid fa-laptop-code"></i>
+              <h4>Desarrollo frontend</h4>
+              <p>Interfaces responsivas, buenas prácticas accesibles y lógica de interacción con JavaScript y React.</p>
+            </div>
+            <div class="value-card glass">
+              <i class="fa-solid fa-server"></i>
+              <h4>Backend y APIs</h4>
+              <p>Construcción de servicios con Express, autenticación JWT y gestión de datos con PostgreSQL.</p>
+            </div>
+            <div class="value-card glass">
+              <i class="fa-solid fa-pen-ruler"></i>
+              <h4>UX/UI y producto</h4>
+              <p>Diseño centrado en el usuario, coherencia visual y comunicación clara de la propuesta de valor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contacto">
+        <div class="container-wide">
+          <div class="contact-box">
+            <div class="row align-items-center g-4">
+              <div class="col-lg-8">
+                <h3>¿Buscas un perfil que combine desarrollo, UX y visión de negocio?</h3>
+                <p>
+                  Estoy abierto a oportunidades en equipos de tecnología, productos digitales y proyectos que realmente
+                  impacten a las personas.
+                </p>
+              </div>
+              <div class="col-lg-4">
+                <div class="contact-actions justify-content-lg-end">
+                  <a class="btn btn-primary-custom" href="https://linkedin.com/in/diego-hernandez-ramos" target="_blank" rel="noreferrer">
+                    LinkedIn
+                  </a>
+                  <a class="btn btn-outline-custom" href="https://github.com/dieherram" target="_blank" rel="noreferrer">
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container-wide footer-inner">
+        <span>© 2026 Diego Hernández</span>
+        <span>Full Stack JavaScript • UX/UI • Product Thinking</span>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
