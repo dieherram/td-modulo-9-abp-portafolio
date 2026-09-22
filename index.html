@@ -54,7 +54,11 @@
       svg.icon, svg[class*="icon"] { fill: currentColor !important; stroke: currentColor !important; }
       .scene-links a svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
       .scene-links .tag-label svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-      .footer-social a svg { fill: currentColor; stroke: none; }
+      .footer-social a svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .footer-social a svg path,
+      .footer-social a svg rect,
+      .footer-social a svg circle,
+      .footer-social a svg polyline { fill: none !important; stroke: currentColor !important; }
       .value-card svg { fill: none; stroke: currentColor; }
       .skill-pill svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -350,6 +354,7 @@
         position: relative;
         overflow: hidden;
         background: var(--bg-surface);
+        aspect-ratio: 16/10;
       }
       .scene-media .carousel {
         width: 100%; height: 100%;
@@ -667,6 +672,150 @@
       }
       .footer-social a:hover { color: var(--text-primary); border-color: var(--text-secondary); background: var(--bg-surface); }
       .footer-social .icon { width: 15px; height: 15px; }
+
+      /* ===== LIGHTBOX MODAL ===== */
+      .lightbox-modal {
+        position: fixed; inset: 0; z-index: 200;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; visibility: hidden;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+      }
+      .lightbox-modal.active { opacity: 1; visibility: visible; }
+      .lightbox-overlay {
+        position: absolute; inset: 0;
+        background: rgba(10, 18, 13, 0.92);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+      .lightbox-container {
+        position: relative; z-index: 1;
+        width: 90vw; max-width: 1000px; max-height: 90vh;
+        display: flex; flex-direction: column;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        transform: scale(0.95);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      }
+      .lightbox-modal.active .lightbox-container { transform: scale(1); }
+      .lightbox-close {
+        position: absolute; top: 1rem; right: 1rem; z-index: 10;
+        width: 40px; height: 40px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(10, 18, 13, 0.7);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: color 0.25s, background 0.25s, border-color 0.25s;
+      }
+      .lightbox-close:hover { color: var(--text-primary); background: rgba(10, 18, 13, 0.9); border-color: var(--text-muted); }
+      .lightbox-close svg { width: 20px; height: 20px; }
+      .lightbox-nav {
+        position: absolute; top: 50%; z-index: 10;
+        transform: translateY(-50%);
+        width: 44px; height: 44px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(10, 18, 13, 0.7);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: color 0.25s, background 0.25s, border-color 0.25s;
+      }
+      .lightbox-nav:hover { color: var(--text-primary); background: rgba(10, 18, 13, 0.9); border-color: var(--text-muted); }
+      .lightbox-nav svg { width: 22px; height: 22px; }
+      .lightbox-prev { left: 1rem; }
+      .lightbox-next { right: 1rem; }
+      .lightbox-content {
+        flex: 1; display: flex; align-items: center; justify-content: center;
+        padding: 3.5rem 4rem;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .lightbox-image {
+        max-width: 100%; max-height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .lightbox-image.loaded { opacity: 1; }
+      .lightbox-footer {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 1.5rem;
+        padding: 1.25rem 1.75rem;
+        background: var(--bg-card);
+        border-top: 1px solid var(--border);
+      }
+      .lightbox-project-info { flex: 1; min-width: 0; }
+      .lightbox-project-name {
+        font-family: var(--display);
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.35rem;
+      }
+      .lightbox-project-desc {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 0.6rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .lightbox-project-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+      .lightbox-project-tags .tag {
+        padding: 0.2rem 0.55rem;
+        background: rgba(0, 155, 77, 0.1);
+        border: 1px solid rgba(0, 155, 77, 0.15);
+        border-radius: 5px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--green-light);
+      }
+      .lightbox-project-link {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        flex-shrink: 0;
+        padding: 0.6rem 1.2rem;
+        background: var(--green);
+        color: var(--bg-deep);
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: background 0.25s, transform 0.2s;
+      }
+      .lightbox-project-link:hover { background: var(--green-light); transform: translateY(-1px); }
+      .lightbox-project-link svg { width: 14px; height: 14px; }
+      .lightbox-counter {
+        position: absolute; bottom: 5.5rem; left: 50%;
+        transform: translateX(-50%);
+        padding: 0.3rem 0.8rem;
+        background: rgba(10, 18, 13, 0.7);
+        border-radius: 9999px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+      }
+      .scene-media .carousel-item img { cursor: pointer; }
+
+      @media (max-width: 768px) {
+        .lightbox-container { width: 95vw; max-height: 95vh; border-radius: 12px; }
+        .lightbox-content { padding: 3rem 1rem; }
+        .lightbox-nav { width: 36px; height: 36px; }
+        .lightbox-nav svg { width: 18px; height: 18px; }
+        .lightbox-prev { left: 0.5rem; }
+        .lightbox-next { right: 0.5rem; }
+        .lightbox-footer { flex-direction: column; align-items: stretch; gap: 1rem; padding: 1rem 1.25rem; }
+        .lightbox-project-link { justify-content: center; }
+        .lightbox-counter { bottom: 6rem; }
+      }
     </style>
   </head>
   <body>
@@ -1097,18 +1246,49 @@
         <span>&copy; 2026 Diego Hernández</span>
         <div class="footer-social" aria-label="Redes sociales">
           <a href="https://github.com/dieherram" target="_blank" rel="noreferrer" aria-label="GitHub">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
           </a>
           <a href="https://linkedin.com/in/diego-hernandez-ramos" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
           <a href="mailto:dieherram@gmail.com" aria-label="Correo">
-            <svg class="icon" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/></svg>
           </a>
         </div>
         <span>Full Stack JavaScript &bull; UX/UI &bull; Product Thinking</span>
       </div>
     </footer>
+
+    <!-- ===== PROJECT LIGHTBOX MODAL ===== -->
+    <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Vista ampliada del proyecto">
+      <div class="lightbox-overlay" id="lightboxOverlay"></div>
+      <div class="lightbox-container">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar vista ampliada">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Imagen anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="lightbox-content">
+          <img class="lightbox-image" id="lightboxImage" src="" alt="" />
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Imagen siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <div class="lightbox-footer" id="lightboxFooter">
+          <div class="lightbox-project-info">
+            <h4 class="lightbox-project-name" id="lightboxProjectName"></h4>
+            <p class="lightbox-project-desc" id="lightboxProjectDesc"></p>
+            <div class="lightbox-project-tags" id="lightboxProjectTags"></div>
+          </div>
+          <a class="lightbox-project-link" id="lightboxProjectLink" href="" target="_blank" rel="noreferrer">
+            Ver repositorio
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+          </a>
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -1172,6 +1352,159 @@
           }
         });
       });
+
+      /* ===== LIGHTBOX MODAL ===== */
+      (function() {
+        var projects = {
+          scenePokedex: {
+            name: 'Mi Pokédex',
+            desc: 'Aplicación para buscar, registrar y visualizar estadísticas de Pokémon consumidos desde la PokéAPI, con persistencia local y gráficos interactivos de estadísticas base.',
+            tags: ['JavaScript', 'Bootstrap', 'PokéAPI'],
+            repo: 'https://github.com/dieherram/td-modulo-3-4-abp-pokedex',
+            images: [
+              { src: './assets/images/01%20Mi%20Pokedex.jpg', alt: 'Mi Pokédex vista principal' },
+              { src: './assets/images/02%20Mi%20Pokedex.jpg', alt: 'Mi Pokédex detalle de búsqueda' },
+              { src: './assets/images/03%20Mi%20Pokedex.jpg', alt: 'Mi Pokédex estadísticas' }
+            ]
+          },
+          sceneAlky: {
+            name: 'Alky Wallet',
+            desc: 'Simulador de billetera digital con inicio de sesión, depósitos, transferencias e historial de transacciones, validaciones de formulario y lógica frontend en un flujo de interacción clara.',
+            tags: ['HTML5', 'CSS3', 'JavaScript'],
+            repo: 'https://github.com/dieherram/td-modulo-2-abp-alky-wallet',
+            images: [
+              { src: './assets/images/01%20Alky%20Wallet.jpg', alt: 'Alky Wallet login' },
+              { src: './assets/images/02%20Alky%20Wallet.jpg', alt: 'Alky Wallet dashboard' },
+              { src: './assets/images/03%20Alky%20Wallet.jpg', alt: 'Alky Wallet historial' }
+            ]
+          },
+          sceneCocteles: {
+            name: 'Cócteles con React',
+            desc: 'Aplicación que consume una API pública de cócteles, con búsqueda, filtrado por categoría y selección al azar, desarrollada con componentes reutilizables y diseño responsivo.',
+            tags: ['React', 'Bootstrap', 'API'],
+            repo: 'https://github.com/dieherram/dl-react-i-consumo-de-apis-con-react',
+            images: [
+              { src: './assets/images/01%20Cocteles%20con%20React.jpg', alt: 'Cócteles con React inicio' },
+              { src: './assets/images/02%20Cocteles%20con%20React.jpg', alt: 'Cócteles con React filtrado' },
+              { src: './assets/images/03%20Cocteles%20con%20React.jpg', alt: 'Cócteles con React detalle' }
+            ]
+          },
+          sceneMamma: {
+            name: 'Mamma Mia!',
+            desc: 'E-commerce de pizzas con catálogo, detalle del producto y carrito de compras, usando React Router para ruteo y Context API para la gestión del estado global.',
+            tags: ['React', 'Router', 'Context API'],
+            repo: 'https://github.com/dieherram/dl-react-ii-trabajo-practico',
+            images: [
+              { src: './assets/images/01%20Mamma%20Mia.jpg', alt: 'Mamma Mia catálogo' },
+              { src: './assets/images/02%20Mamma%20Mia.jpg', alt: 'Mamma Mia detalle' },
+              { src: './assets/images/03%20Mamma%20Mia.jpg', alt: 'Mamma Mia carrito' }
+            ]
+          },
+          sceneSoftJobs: {
+            name: 'Soft Jobs API',
+            desc: 'API backend para una plataforma de empleos junior con autenticación por JWT, contraseñas encriptadas, gestión de usuarios y middlewares de autorización.',
+            tags: ['Node.js', 'Express', 'JWT'],
+            repo: 'https://github.com/dieherram/dl-backend-con-node-y-express-autenticacion-y-autorizacion-de-usuarios-con-jwt',
+            images: [
+              { src: './assets/images/01%20Soft%20Jobs%20API.jpg', alt: 'Soft Jobs API documentación' },
+              { src: './assets/images/02%20Soft%20Jobs%20API.jpg', alt: 'Soft Jobs API auth' },
+              { src: './assets/images/03%20Soft%20Jobs%20API.jpg', alt: 'Soft Jobs API flujo de usuarios' }
+            ]
+          },
+          sceneVanilla: {
+            name: 'De Vanilla JS a React',
+            desc: 'Caso de estudio que compara la lógica de la app de cócteles construida con React y un proyecto previo realizado en JavaScript vanilla, resaltando la evolución de la arquitectura frontend.',
+            tags: ['React', 'UX', 'Arquitectura'],
+            repo: '#caso-estudio',
+            images: [
+              { src: './assets/images/01%20Cocteles%20con%20React.jpg', alt: 'Caso de estudio React' },
+              { src: './assets/images/01%20Alky%20Wallet.jpg', alt: 'Caso de estudio Alky Wallet' },
+              { src: './assets/images/02%20Cocteles%20con%20React.jpg', alt: 'Comparación de arquitectura' }
+            ]
+          }
+        };
+
+        var modal = document.getElementById('lightboxModal');
+        var overlay = document.getElementById('lightboxOverlay');
+        var closeBtn = document.getElementById('lightboxClose');
+        var prevBtn = document.getElementById('lightboxPrev');
+        var nextBtn = document.getElementById('lightboxNext');
+        var imageEl = document.getElementById('lightboxImage');
+        var nameEl = document.getElementById('lightboxProjectName');
+        var descEl = document.getElementById('lightboxProjectDesc');
+        var tagsEl = document.getElementById('lightboxProjectTags');
+        var linkEl = document.getElementById('lightboxProjectLink');
+        var counterEl = document.getElementById('lightboxCounter');
+
+        var currentProject = null;
+        var currentIndex = 0;
+        var lastFocusedElement = null;
+
+        function openLightbox(projectId, imageIndex) {
+          currentProject = projects[projectId];
+          if (!currentProject) return;
+          currentIndex = imageIndex || 0;
+          lastFocusedElement = document.activeElement;
+          updateContent();
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          closeBtn.focus();
+        }
+
+        function closeLightbox() {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+          if (lastFocusedElement) lastFocusedElement.focus();
+          currentProject = null;
+        }
+
+        function updateContent() {
+          if (!currentProject) return;
+          var img = currentProject.images[currentIndex];
+          imageEl.classList.remove('loaded');
+          imageEl.src = img.src;
+          imageEl.alt = img.alt;
+          imageEl.onload = function() { imageEl.classList.add('loaded'); };
+          nameEl.textContent = currentProject.name;
+          descEl.textContent = currentProject.desc;
+          tagsEl.innerHTML = currentProject.tags.map(function(t) {
+            return '<span class="tag">' + t + '</span>';
+          }).join('');
+          linkEl.href = currentProject.repo;
+          counterEl.textContent = (currentIndex + 1) + ' / ' + currentProject.images.length;
+          prevBtn.style.display = currentProject.images.length > 1 ? '' : 'none';
+          nextBtn.style.display = currentProject.images.length > 1 ? '' : 'none';
+        }
+
+        function navigate(direction) {
+          if (!currentProject) return;
+          currentIndex = (currentIndex + direction + currentProject.images.length) % currentProject.images.length;
+          updateContent();
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+        overlay.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', function() { navigate(-1); });
+        nextBtn.addEventListener('click', function() { navigate(1); });
+
+        document.addEventListener('keydown', function(e) {
+          if (!modal.classList.contains('active')) return;
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') navigate(-1);
+          if (e.key === 'ArrowRight') navigate(1);
+        });
+
+        document.querySelectorAll('.scene-media .carousel-item img').forEach(function(img) {
+          img.addEventListener('click', function() {
+            var carousel = this.closest('.carousel');
+            var projectId = carousel.id;
+            var activeItem = carousel.querySelector('.carousel-item.active');
+            var images = activeItem ? activeItem.parentElement.children : [];
+            var index = Array.from(images).indexOf(activeItem);
+            openLightbox(projectId, index >= 0 ? index : 0);
+          });
+        });
+      })();
     </script>
   </body>
 </html>
