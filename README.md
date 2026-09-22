@@ -15,16 +15,6 @@ El objetivo de este proyecto es presentar una mirada integral sobre mi trabajo: 
 
 **Portafolio desplegado:** [https://dieherram.github.io/td-modulo-9-abp-portafolio/](https://dieherram.github.io/td-modulo-9-abp-portafolio/)
 
-El landing page utiliza un video de fondo en formatos WebM y MP4 para mejorar la compatibilidad entre navegadores.
-
-<video controls muted playsinline width="100%">
-  <source src="./assets/videos/hero-background.webm" type="video/webm" />
-  <source src="./assets/videos/hero-background.mp4" type="video/mp4" />
-  Tu navegador no soporta la reproducción de video.
-</video>
-
-[Ver video de fondo en formato MP4](./assets/videos/hero-background.mp4)
-
 ## Proyectos destacados
 
 ### Mi Pokédex
@@ -103,7 +93,6 @@ El objetivo fue separar responsabilidades entre datos, negocio y presentación, 
 - **Desarrollo frontend:** interfaces responsivas, accesibles y con interacciones claras usando JavaScript y React.
 - **Backend y APIs:** servicios con Express, autenticación JWT y gestión de datos con PostgreSQL.
 - **UX/UI y producto:** diseño centrado en el usuario, coherencia visual y comunicación de la propuesta de valor.
-- **Visión de negocio:** capacidad para conectar objetivos comerciales, necesidades de usuario y decisiones técnicas.
 
 ## Tecnologías
 
@@ -113,12 +102,10 @@ El objetivo fue separar responsabilidades entre datos, negocio y presentación, 
 
 ```text
 assets/
-├── icons/     # Iconos SVG de Lucide para la interfaz
-├── images/    # Capturas optimizadas de los proyectos en formato JPEG
-└── videos/    # Video del hero en WebM y MP4
+└── images/    # Capturas optimizadas de los proyectos en formato JPEG
 ```
 
-Las imágenes del landing utilizan carga diferida (`loading="lazy"`) y decodificación asíncrona para reducir el trabajo inicial del navegador. El video utiliza `preload="metadata"` y cuenta con MP4 como alternativa de compatibilidad.
+Las imágenes del landing utilizan carga diferida (`loading="lazy"`) y decodificación asíncrona para reducir el trabajo inicial del navegador.
 
 ## Ejecutar el proyecto
 
