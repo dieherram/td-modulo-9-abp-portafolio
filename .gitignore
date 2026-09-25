@@ -1,8 +1,10 @@
 # Impeccable skill
 .opencode/
+.impeccable/
 
 # Product truth (internal)
 PRODUCT.md
+DESIGN.md
 
 # OS files
 Thumbs.db
