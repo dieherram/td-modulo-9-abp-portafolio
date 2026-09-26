@@ -5,67 +5,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Diego Hernández — Desarrollador Full Stack & UX/UI</title>
     <meta name="description" content="Portafolio de Diego Hernández — Desarrollador Full Stack JavaScript, Marketing y Diseño UX/UI. Soluciones digitales con claridad, impacto y experiencia de usuario." />
-    <meta name="theme-color" content="#0c1629" />
+    <meta name="theme-color" content="#192A55" />
     <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
     <link rel="apple-touch-icon" href="./assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Bricolage Grotesque replaced Sora as the display face. Sora's 800 closed
+         its counters at the display sizes this page runs, which is what made the
+         hero name and the section titles read dense rather than loud. Bricolage
+         ships an `opsz` axis, so with font-optical-sizing the same family draws
+         high-contrast letterforms at 84px and opens up at 12px — one family
+         covers hero name and 0.7rem label without a second display cut.
+         Only the weights actually used are asked for, as one variable file:
+         400-800 covers display 600-800, and Manrope 400-600 carries the body.
+         Micro-labels (Acto, Escena, uppercase chips) stay on Manrope: a display
+         cut at 11px is a legibility bug wearing a style. -->
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
     <style>
-      /* ===== DESIGN TOKENS ===== */
+      /* ===== DESIGN TOKENS =====
+         The five primitives are the brand, read off assets/images/dh-logo.svg.
+         Everything else is derived from them, and every derived step was measured
+         against the surface it is used on rather than eyeballed — which changed
+         the system twice:
+
+         - #FA910E measures 2.06:1 on #F2F2F2 and 2.27:1 on white. It is a fill
+           and an on-navy text colour (5.98:1 on #192A55), never text on light.
+           Small orange text on light takes --orange-700 at 5.28:1.
+         - #AEB4BF measures 1.86:1 on #F2F2F2. It is text on navy (6.93:1), a
+           border, and a divider. It is not text on light; --slate-600 and
+           --slate-500 carry it there at 7.15:1 and 4.59:1.
+
+         The two brand neutrals are not interchangeable with the ink roles, and the
+         old page leaned on "text = the page background" for labels sitting on an
+         accent fill. That inversion is what --text-on-accent exists to kill. */
       :root {
-        /* Navy scale */
-        --navy-950: #060d1b;
-        --navy-900: #0c1629;
-        --navy-800: #14203d;
-        --navy-700: #1a2a52;
-        --navy-600: #1f3568;
-        --navy-500: #2a3f7a;
+        /* Brand primitives. Sampled from the mark itself (assets/images/dh-logo.svg
+           and assets/favicon.svg): the navy of the letterforms is #192A55 and the
+           orange of the corner is #FA910E. Everything else in this file is derived
+           from these two, so the page and the logo cannot drift apart. */
+        --navy-700: #192A55;
+        --slate-400: #AEB4BF;
+        --orange-500: #FA910E;
+        --mist-200: #F2F2F2;
+        --ink-900: #0D0D0D;
 
-        /* Amber scale */
-        --amber-600: #c47400;
-        --amber-500: #FA910E;
-        --amber-400: #FFB347;
-        --amber-300: #FFCC66;
-        --amber-200: #FFE0A0;
+        /* Navy ramp: #192A55 with every step moved by the same (-2, -6, -4) the
+           base moved by, so the internal relationships of the old ramp survive. */
+        --navy-900: #0C152F;
+        --navy-800: #121E3C;
+        --navy-700: #192A55;
+        --navy-600: #243D6B;
+        --navy-500: #2D497C;
+        --navy-200: #8997B6;
+        --navy-100: #B7BED2;
 
-        /* Warm neutrals */
-        --warm-white: #f8f3ea;
+        /* Orange ramp. 500 is the logo's own orange. 600 and 700 are NOT shifted
+           to match: the logo's orange is lighter than the one this ramp was built
+           on, and shifting the deeper steps with it pushed --accent-ink under
+           4.5:1 on the mist canvas (4.30:1 at #A96004). They stay put, darkened
+           against the canvas instead: 600 is the hover fill, 700 is text on
+           light and carries the 5.28:1 that --accent-text depends on. */
+        --orange-700: #A14C05;
+        --orange-600: #D47C0C;
+        --orange-500: #FA910E;
+        --orange-100: #FDEBC4;
 
-        /* Semantic: surfaces */
-        --bg-deep: var(--navy-900);
-        --bg-surface: var(--navy-800);
-        --bg-card: var(--navy-700);
-        --primary: var(--navy-700);
-        --primary-light: var(--navy-500);
+        /* Neutrals, tinted by the brand navy so they read as one family */
+        --mist-50: #FFFFFF;
+        --mist-300: #E7E7E9;
+        --slate-600: #4A515C;
+        --slate-500: #676E7A;
 
-        /* Semantic: accent */
-        --accent: var(--amber-500);
-        --accent-light: var(--amber-400);
-        --accent-dim: var(--amber-600);
-        --accent-glow: var(--amber-300);
-        --accent-tint: var(--amber-200);
+        /* Semantic: surfaces. The page is light; navy is reserved for the blocks
+           where the brand speaks in its own name. */
+        --bg-canvas: var(--mist-200);
+        --bg-surface: var(--mist-50);
+        --bg-inset: var(--mist-300);
+        --bg-navy: var(--navy-700);
 
         /* Semantic: text */
-        --text-primary: #f0f2f5;
-        --text-secondary: #a8b4cc;
-        --text-muted: #8a9ab8;
+        --text-primary: var(--ink-900);
+        --text-secondary: var(--slate-600);
+        --text-muted: var(--slate-500);
+        /* Ink on an accent fill: 8.41:1 on --accent, 6.16:1 on --orange-600. */
+        --text-on-accent: var(--ink-900);
+
+        /* Semantic: accent */
+        --accent: var(--orange-500);
+        --accent-deep: var(--orange-600);
+        /* The accent as text. Darkened on light surfaces, untouched on navy. */
+        --accent-ink: var(--orange-700);
 
         /* Semantic: borders */
-        --border: rgba(240, 242, 245, 0.08);
-        --border-accent: rgba(250, 145, 14, 0.15);
+        --border: rgba(13, 13, 13, 0.1);
+        --border-strong: rgba(13, 13, 13, 0.24);
+        --border-accent: rgba(250, 145, 14, 0.34);
 
         /* Accent tints */
-        --tint-accent-bg: rgba(250, 145, 14, 0.1);
-        --tint-accent-border: rgba(250, 145, 14, 0.2);
-        --tint-accent-subtle: rgba(250, 145, 14, 0.08);
-        --shadow-accent: rgba(250, 145, 14, 0.25);
+        --tint-accent-bg: rgba(250, 145, 14, 0.09);
+        --tint-accent-border: rgba(250, 145, 14, 0.28);
+        --tint-accent-subtle: rgba(250, 145, 14, 0.06);
+        --shadow-accent: rgba(250, 145, 14, 0.3);
+
+        /* The focus ring is a control, so it owes 3:1 against whatever it lands
+           on. The accent cannot pay that on a light canvas (2.06:1), so the ring
+           is navy there and flips to mist inside the navy blocks. */
+        --focus-ring: var(--navy-700);
 
         /* Typography */
-        --display: 'Syne', system-ui, sans-serif;
-        --body: 'Manrope', system-ui, sans-serif;
+        --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        --body: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        /* The display face is variable and carries an optical-size axis. Leaving
+           this on `auto` is what lets one family do the hero at 84px and a 0.7rem
+           label at the same weight: the browser maps opsz to the rendered size and
+           the strokes thin out as the type gets small. Turning it off pins the
+           contrast for the whole page to the text size. */
+        --display-optical: auto;
+
+        /* Type roles. Sizes are fluid at the display end and fixed at the small
+           end, where a fluid size only makes a label harder to read.
+           Tracking loosened from -0.03em to -0.02em: Sora is a narrow geometric
+           and needed the squeeze, Bricolage is wider and tight tracking started
+           colliding the sidebearings on the uppercase hero name. */
+        --type-display: clamp(2.75rem, 7.4vw, 5.25rem);
+        --type-section: clamp(1.75rem, 3.8vw, 2.75rem);
+        --type-climax: clamp(1.9rem, 4.6vw, 3rem);
+        --type-card: clamp(1.3rem, 2.4vw, 1.7rem);
+        --type-lede: 1.05rem;
+        --type-body: 0.975rem;
+        --type-small: 0.85rem;
+        --type-label: 0.7rem;
+        --measure: 68ch;
+      }
+
+      /* The inverted regions. They do not restate colours: they remap the
+         semantic layer, so every child inside keeps asking for --text-secondary
+         and gets the value that is actually readable on navy. This is what lets
+         the hero, the metrics panel, the resolution box, the footer and the
+         lightbox share one component vocabulary across two palettes. */
+      .on-navy {
+        --bg-canvas: var(--navy-700);
+        --bg-surface: var(--navy-800);
+        --bg-inset: var(--navy-600);
+        --text-primary: var(--mist-200);
+        --text-secondary: var(--slate-400);
+        --text-muted: var(--navy-200);
+        --border: rgba(242, 242, 242, 0.18);
+        --border-strong: rgba(242, 242, 242, 0.34);
+        --border-accent: rgba(250, 145, 14, 0.44);
+        --tint-accent-bg: rgba(250, 145, 14, 0.16);
+        --tint-accent-border: rgba(250, 145, 14, 0.4);
+        --tint-accent-subtle: rgba(250, 145, 14, 0.1);
+        --accent-ink: var(--orange-500);
+        --focus-ring: var(--mist-200);
+        /* Re-resolve color here: body resolves --text-primary at body, so an
+           inherited color would stay ink on navy regardless of the remap. */
+        color: var(--text-primary);
       }
 
       /* ===== RESET & BASE ===== */
@@ -73,21 +170,42 @@
       html { scroll-behavior: smooth; }
       body {
         font-family: var(--body);
-        background: var(--bg-deep);
+        background: var(--bg-canvas);
         color: var(--text-primary);
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
+        /* Inherited, so every display run opts into its own optical size. Manrope
+           has no opsz axis, so this is a no-op on the body copy. */
+        font-optical-sizing: var(--display-optical);
       }
       img { display: block; max-width: 100%; height: auto; }
       a { color: inherit; text-decoration: none; }
+
+      /* ===== BROWSER SURFACES =====
+         The parts of the page nobody draws still have to belong to the design
+         system. On a light canvas these were the ones shipping pure browser
+         defaults: a blue selection, a grey scrollbar, a blue caret. */
+      ::selection { background: var(--navy-700); color: var(--mist-200); }
+      :root { caret-color: var(--navy-700); accent-color: var(--orange-500); scrollbar-color: var(--slate-400) var(--mist-200); }
+      ::-webkit-scrollbar { width: 12px; height: 12px; }
+      ::-webkit-scrollbar-track { background: var(--mist-200); }
+      ::-webkit-scrollbar-thumb { background: var(--slate-400); border: 3px solid var(--mist-200); border-radius: 9999px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--slate-500); }
+      /* Underlines are drawn here, not per-component, so every link in the page
+         lands on the same optical baseline instead of the browser's. */
+      a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+      /* The accent as a run of words on a light surface. One class, so the rule is
+         the token `--accent-ink` — the darkened orange that measures 5.28:1 here —
+         and never a hex typed into a style attribute. */
+      .accent-text { color: var(--accent-ink); }
 
       /* ===== UTILITIES ===== */
       .container-narrow { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
       .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
       .skip-link {
         position: absolute; top: -100%; left: 50%; transform: translateX(-50%);
-        background: var(--accent); color: var(--bg-deep);
+        background: var(--accent); color: var(--text-on-accent);
         padding: 0.75rem 1.5rem; border-radius: 0 0 8px 8px;
         font-weight: 600; font-size: 0.85rem; z-index: 999;
         transition: top 0.2s;
@@ -99,8 +217,8 @@
          A blanket `svg { fill: currentColor !important }` here used to beat every
          per-component `fill: none` below it and painted every Lucide glyph solid. */
       .nav-logo path, .nav-logo rect { stroke: none; }
-      .scene-links a svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-      .scene-links .tag-label svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .project-links a svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .project-links .project-meta svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
       .footer-social a svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
       .value-pillar-icon svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
       .skill-pill svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -110,7 +228,7 @@
          design system. Keyboard focus is drawn in the accent, offset so it never
          sits under the element's own edge. */
       :focus-visible {
-        outline: 2px solid var(--accent);
+        outline: 2px solid var(--focus-ring);
         outline-offset: 3px;
         border-radius: 4px;
       }
@@ -138,7 +256,16 @@
         .reveal, .reveal-scale, .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
       }
 
-      /* ===== NAVBAR ===== */
+      /* ===== NAVBAR =====
+         The bar is the brand navy in both states. Unscrolled it is transparent,
+         so the hero's navy reads straight through and the two are one block; once
+         the page scrolls it becomes that same navy, fully opaque, with a blur and a
+         hairline rule, which separates it from the light canvas passing underneath
+         without ever changing colour. One surface, one mark colour, no mid-scroll
+         flip — and no mid-scroll *tint* either: at 0.94 the bar let 6% of the mist
+         canvas through even at rest, and the half-faded frames on the way there were
+         far worse, so the destination is opaque and `.on-canvas` (see the scroll
+         state below) ends the fade the frame the canvas arrives. */
       .navbar-cinematic {
         position: fixed; top: 0; left: 0; right: 0; z-index: 100;
         padding: 1rem 0;
@@ -146,35 +273,41 @@
         transition: background 0.4s, box-shadow 0.4s, padding 0.4s;
       }
       .navbar-cinematic.scrolled {
-        background: rgba(12, 22, 41, 0.92);
+        background: var(--navy-700);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         box-shadow: 0 1px 0 var(--border);
         padding: 0.6rem 0;
       }
+      /* Past the hero the bar is a plate, not a fade: no transition, so a jump — a
+         hash on load, a restored scroll position, a momentum flick — lands on the
+         finished state instead of playing the fade against the light canvas. */
+      .navbar-cinematic.scrolled.on-canvas { transition: none; }
       .navbar-cinematic .container-narrow { display: flex; align-items: center; justify-content: space-between; }
       .nav-brand {
         display: flex;
         align-items: center;
-        color: var(--warm-white);
+        /* 44px around the mark. The logo is 40px on desktop and 34px on a phone,
+           and both were a target smaller than the thumb that has to hit it on the
+           way to the menu button next to it. */
+        min-height: 44px;
+        min-width: 44px;
+        color: var(--mist-200);
       }
       .nav-logo {
         height: 40px;
         width: auto;
         display: block;
       }
-      /* The mark is one colour, painted from --warm-white #f8f3ea. It is the page's
-         warm neutral, not --text-primary: against this cool navy, a warm white reads
-         as lit and the mark stops looking like a hole punched in the navbar. It also
-         measures higher than the cool #f0f2f5 it replaced (16.5:1 vs 16.2:1 on the
-         scrolled surface), so the switch costs nothing on the measurable axis.
-         currentColor keeps the SVG surface-agnostic: the same paths inherit whatever
-         the placement names them, which is how the footer mark stays correct.
-         The mark used to split into a white monogram plus an amber frame. Two hues
-         at 40px is where a mark stops reading as one shape: the warm ring muddied
-         against the cool navy and chewed the edge off the letterforms, which is what
-         read as low contrast even though neither colour individually failed.
-         Still no hex in the path data, only tokens: the source logo's navy
+      /* The mark is one colour, painted from --mist-200 #F2F2F2: 11.62:1 on the
+         brand navy, which is the navbar's own surface in both states, and it is
+         the same token the hero's <h1> paints in, so bar and headline are one
+         voice. currentColor keeps the SVG surface-agnostic: the same paths inherit
+         whatever the placement names them, which is how the footer mark stays
+         correct. The mark is deliberately NOT two-tone — two hues at 40px is where
+         a mark stops reading as one shape, and the brand's orange frame path has
+         its own jobs on this page (the divider node, the hero foot, the fills).
+         Still no hex in the path data, only tokens: the source logo's own navy
          (#192A55) measures 1.3:1 on this surface and was effectively invisible. */
       /* DO NOT rename `.brand-mark` back to `.mark`. Bootstrap ships
          `.mark, mark { color: var(--bs-highlight-color) }` and --bs-highlight-color is
@@ -191,61 +324,137 @@
          surface of its own. The <h1> already guarantees its legibility there with a
          soft dark shadow; the mark takes the same one, shaped by the SVG's own
          alpha so its counters stay open. Scoped to the unscrolled state, because
-         on the solid 0.92 surface behind it there is nothing left to hold. */
+         on the solid surface behind it there is nothing left to hold. */
       .navbar-cinematic:not(.scrolled) .nav-logo {
-        filter: drop-shadow(0 2px 20px rgba(6, 13, 27, 0.75));
+        filter: drop-shadow(0 2px 18px rgba(12, 21, 47, 0.85));
       }
       .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
       .nav-links a {
-        font-size: 0.85rem;
+        font-size: var(--type-small);
         font-weight: 500;
         color: var(--text-secondary);
+        /* 24px of row: WCAG 2.5.8's floor, and the 18px line these used to occupy is
+           a row a trackpad skips over. */
+        display: flex;
+        align-items: center;
+        min-height: 24px;
         transition: color 0.25s;
-        letter-spacing: -0.01em;
       }
       .nav-links a:hover { color: var(--text-primary); }
       .nav-cta {
         background: var(--accent);
-        color: var(--bg-deep) !important;
+        color: var(--text-on-accent) !important;
         padding: 0.5rem 1.25rem;
+        min-height: 36px;
         border-radius: 9999px;
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: var(--type-small);
         transition: background 0.25s, transform 0.2s;
       }
-      .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+      .nav-cta:hover { background: var(--accent-deep); transform: translateY(-1px); }
       .nav-toggle {
         display: none;
         background: none; border: none; cursor: pointer;
-        width: 32px; height: 32px; position: relative;
+        width: 44px; height: 44px; position: relative;
+        margin-right: -0.7rem;
+        z-index: 2;
       }
       .nav-toggle span {
         display: block; width: 20px; height: 2px; background: var(--text-primary);
-        position: absolute; left: 6px; transition: all 0.3s;
+        position: absolute; left: 12px;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s, top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .nav-toggle span:nth-child(1) { top: 9px; }
-      .nav-toggle span:nth-child(2) { top: 15px; }
-      .nav-toggle span:nth-child(3) { top: 21px; }
+      .nav-toggle span:nth-child(1) { top: 15px; }
+      .nav-toggle span:nth-child(2) { top: 21px; }
+      .nav-toggle span:nth-child(3) { top: 27px; }
+      /* The button transforms into its own dismissal. It used to flip aria-expanded
+         and look identical open and closed, so on a phone the only way out of the
+         menu was picking a destination — which is a decision, not a dismissal. */
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+      /* The scrim is the second way out, and the one a thumb expects: it darkens
+         the page under the panel, and tapping it closes the menu. It lives inside
+         the navbar's own stacking context (z-index 100) and below the bar's
+         content, so it covers the whole viewport while the toggle and the panel
+         stay on top of it and clickable. */
+      .nav-scrim {
+        position: fixed; inset: 0;
+        z-index: 0;
+        background: rgba(12, 21, 47, 0.55);
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+      }
+      .navbar-cinematic.is-open .nav-scrim { opacity: 1; visibility: visible; }
 
       @media (max-width: 768px) {
         .nav-toggle { display: block; }
         .nav-logo { height: 34px; }
+        .navbar-cinematic .container-narrow { position: relative; z-index: 1; }
         .nav-links {
-          position: fixed; top: 0; right: -100%; width: 75%; max-width: 300px; height: 100vh;
-          flex-direction: column; justify-content: center; gap: 2rem;
-          background: var(--bg-surface); padding: 2rem;
+          position: fixed; top: 0; right: -100%; width: 78%; max-width: 320px; height: 100%;
+          height: 100dvh;
+          flex-direction: column; justify-content: center; gap: 0.5rem;
+          background: var(--navy-800); padding: 5rem 1.75rem 2rem;
           transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: -4px 0 24px rgba(0,0,0,0.4);
+          box-shadow: -8px 0 32px rgba(12, 21, 47, 0.45);
+          overflow-y: auto;
         }
         .nav-links.open { right: 0; }
+        /* 44px rows. A 27px line of text is not a tap target, and this panel is
+           the whole navigation on a phone. */
+        .nav-links a {
+          display: flex;
+          align-items: center;
+          min-height: 44px;
+          font-size: 1.05rem;
+          font-weight: 600;
+        }
+        .nav-links li { list-style: none; }
+        .nav-cta {
+          margin-top: 1.25rem;
+          justify-content: center;
+          min-height: 48px;
+          width: 100%;
+          font-size: 1rem;
+        }
       }
+      /* The lock is a class on <body>, not an inline style like the lightbox's, so
+         the two overlays each own a key of their own and neither clears the
+         other's lock when it closes. */
+      body.nav-open { overflow: hidden; }
 
-      /* ===== HERO ===== */
-      /* Layer order: gradient floor (0) → background video (1) → scrim (2) → content (3).
-         The gradient is always present, so the hero is complete before — and without — the video. */
+      /* ===== HERO =====
+         The one dark region at the top of a light page, and the block the brand
+         navy is named for. Layer order: navy seat (the element's own background)
+         → gradient floor (0) → background video (1) → scrim (2) → content (3)
+         → accent foot (4).
+
+         The video is the background. The floor is not a second background that
+         happens to sit underneath it: it is the hero's load state and its failure
+         state, and it stops being painted the moment the first frame is on
+         screen. The seat is what the two hand over on — see `.hero::before`. */
       .hero {
         position: relative;
+        /* The opaque seat, and the reason the hero can afford to fade its own
+           floor out. Cross-fading the floor away while the video fades in means
+           that for most of a second both layers are partly transparent, and with
+           nothing under them the mist page canvas shows through: a grey-blue
+           flash under light text, and under a navbar that is deliberately
+           transparent. Deepest navy, so the seat is invisible everywhere the
+           floor or the footage is not painting, including in the gap before the
+           floor's first paint. */
+        background: var(--navy-900);
         min-height: 100vh;
+        /* 100vh on a phone is taller than the visible area once the browser chrome
+           retracts, which pushed the scroll cue below the fold. svh is the height
+           the viewport actually has; the vh line stays as the fallback for the
+           browsers that do not know it. */
+        min-height: 100svh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -257,18 +466,50 @@
         content: '';
         position: absolute; inset: 0;
         z-index: 0;
-        background: linear-gradient(135deg,
-          var(--navy-950) 0%,
-          var(--navy-900) 25%,
-          #1a1a3a 50%,
-          var(--navy-900) 75%,
-          var(--navy-950) 100%);
-        background-size: 400% 400%;
-        animation: heroGradient 15s ease infinite;
+        /* Two jobs in one layer: an animated lateral drift, and a vertical seat so
+           the name and the foot land on a surface that darkens under them rather
+           than on a flat field. */
+        background:
+          linear-gradient(to bottom, rgba(12, 21, 47, 0) 40%, var(--navy-900) 100%),
+          linear-gradient(135deg,
+            var(--navy-900) 0%,
+            var(--navy-800) 28%,
+            var(--navy-700) 50%,
+            var(--navy-800) 72%,
+            var(--navy-900) 100%);
+        background-size: 100% 100%, 400% 400%;
+        background-position: 0% 0%, 0% 50%;
+        animation: heroGradient 18s ease infinite;
+        /* Same duration and same curve as the video's own fade, so the handover
+           is one cross-fade and not a reveal of whatever sits behind it. */
+        transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      /* The floor's exit. It fades rather than being switched off so the swap is
+         a dissolve, and the drift is paused rather than killed: `animation: none`
+         would snap an 18-second drift straight back to its first keyframe, and
+         that jump is plainly visible while the layer is still on screen. Paused
+         at opacity 0 the layer stops costing anything — nothing about it moves
+         any more — and if the video is later taken away mid-session the drift
+         resumes from where it was instead of restarting. */
+      .hero.has-video::before {
+        opacity: 0;
+        animation-play-state: paused;
       }
       @keyframes heroGradient {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+        0%, 100% { background-position: 0% 0%, 0% 50%; }
+        50% { background-position: 0% 0%, 100% 50%; }
+      }
+      /* The accent's one strong region: a full-bleed band across the foot of the
+         hero. It is the edge the page is built on, it is the same orange the
+         banner carries, and it is the one place the accent is a field rather than
+         a detail. Flat, not a gradient — a band does not need to be a fade. */
+      .hero::after {
+        content: '';
+        position: absolute; left: 0; right: 0; bottom: 0;
+        z-index: 4;
+        height: clamp(6px, 0.9vw, 10px);
+        background: var(--orange-500);
+        pointer-events: none;
       }
       .hero-video {
         position: absolute; inset: 0;
@@ -281,29 +522,38 @@
         transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
       }
       .hero-video.ready { opacity: 1; }
+      /* A warm bloom low in the frame, so the accent reaches the composition even
+         when the video is abandoned and only the floor is showing. */
       .hero-overlay {
         position: absolute; inset: 0;
         z-index: 2;
-        background:
-          radial-gradient(ellipse at 50% 80%, var(--tint-accent-subtle) 0%, transparent 60%),
-          linear-gradient(to bottom, rgba(12, 22, 41, 0.3) 0%, rgba(12, 22, 41, 0.7) 60%, var(--bg-deep) 100%);
+        background: radial-gradient(ellipse at 50% 88%, var(--tint-accent-bg) 0%, transparent 62%);
       }
-      /* Once the video paints, the base wash steps aside and the scrim below carries
-         the whole job: two stacked 0.7 washes crush dark footage to solid black. */
-      .hero.has-video .hero-overlay {
-        background: radial-gradient(ellipse at 50% 80%, var(--tint-accent-subtle) 0%, transparent 60%);
-      }
-      /* Tuned for dark footage. If a frame ever reads too bright under the headline,
-         raise the 0.5 stop to 0.86 — that is the value which holds 4.5:1 even on a
-         pure-white frame. */
+      /* Once the video paints, this scrim carries the whole legibility job, and it
+         is the layer the hero's text is actually measured against: the floor is
+         gone by then, so the footage is the only thing behind the content and a
+         moving frame is not a surface any token can be resolved on. It is brand
+         navy, not black — black would desaturate the footage away from the palette
+         the rest of the page is built on. Its own bloom underneath does nothing
+         once it reaches 0.92 at the edges, which is what lets both share a layer.
+
+         The emphasis is where the type is, not where the frame is. It used to run
+         the other way — 0.52 at the centre against 0.92 at the edges — which left
+         the 84px name sitting on the lightest part of the wash while the corners,
+         which hold nothing, got the darkest. Measured over the whole 17s loop with
+         the text hidden and the backdrop sampled at its 99.5th percentile, the
+         edges cleared 5.06:1 for a nav link and 6.09:1 for the scroll cue and the
+         middle failed: 2.65:1 for the orange half of the name against its 3:1
+         floor, 3.29:1 for the orange in the headline against 4.5:1. The centre
+         stops now carry the display type, and the edges keep the vignette. */
       .hero-overlay::after {
         content: '';
         position: absolute; inset: 0;
         opacity: 0;
         transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
         background:
-          radial-gradient(ellipse at 50% 42%, rgba(6, 13, 27, 0.5) 0%, rgba(6, 13, 27, 0.72) 68%, rgba(6, 13, 27, 0.88) 100%),
-          linear-gradient(to bottom, rgba(6, 13, 27, 0.58) 0%, rgba(6, 13, 27, 0.26) 30%, rgba(10, 19, 38, 0.62) 74%, var(--bg-deep) 100%);
+          radial-gradient(ellipse at 50% 42%, rgba(12, 21, 47, 0.68) 0%, rgba(12, 21, 47, 0.84) 68%, rgba(12, 21, 47, 0.92) 100%),
+          linear-gradient(to bottom, rgba(12, 21, 47, 0.5) 0%, rgba(12, 21, 47, 0.36) 30%, rgba(12, 21, 47, 0.6) 74%, var(--navy-900) 100%);
       }
       .hero.has-video .hero-overlay::after { opacity: 1; }
       .hero-content {
@@ -313,55 +563,91 @@
       }
       .hero-name {
         font-family: var(--display);
+        /* 700, not 800. At 84px uppercase Bricolage's 800 starts closing the
+           counters of R, N and G, and the hero name is the one line on the page
+           that has to stay readable while a video moves behind it. 700 is the
+           heaviest weight that still opens. */
         font-weight: 700;
-        font-size: clamp(3rem, 8vw, 5.5rem);
-        line-height: 0.95;
-        letter-spacing: -0.05em;
-        margin-bottom: 1.5rem;
+        font-size: var(--type-display);
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+        margin-bottom: 1.25rem;
         opacity: 0;
         animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
       }
-      .hero-name .accent { color: var(--accent); }
+      /* The role sits under the name because it is what a recruiter scans for, and
+         "Full Stack JavaScript · UX/UI" is the exact string the LinkedIn banner and
+         the CV carry — this line is the congruence between the two surfaces, so it
+         is set in the same words, not a paraphrase.
+         It is a lockup line, not a tracked-caps chip above the headline: an
+         uppercase 11px label floating over a masthead is the default SaaS hero and
+         it is also the smallest text on the page. At 1.05rem in Manrope 600 on
+         11.62:1 mist it reads as a subtitle, which is what it is. */
+      .hero-role {
+        font-family: var(--body);
+        font-size: clamp(0.95rem, 1.9vw, 1.08rem);
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        color: var(--mist-200);
+        margin-bottom: 1.75rem;
+        opacity: 0;
+        animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+      }
+      /* Two shadows, not one. The 26px halo is what separates a word from a moving
+         frame at a distance; it does nothing for the counters — the hole in an R,
+         the eye of an e — where the footage shows straight through the letter. The
+         1px contact shadow closes those, which is the difference between the glyph
+         reading and the glyph surviving. */
+      .hero.has-video .hero-role { text-shadow: 0 1px 2px rgba(12, 21, 47, 0.92), 0 2px 26px rgba(12, 21, 47, 0.85); }
+      /* 4.66:1 on the brand navy, so the accent can carry half the name at display
+         weight — the one place in this palette where the vivid orange is a text
+         colour. */
+      .hero-name .accent { color: var(--orange-500); }
       /* Legibility guarantee over video frames; no filter, no blur — text shadow only. */
       .hero.has-video .hero-name,
-      .hero.has-video .hero-headline { text-shadow: 0 2px 26px rgba(6, 13, 27, 0.8); }
+      .hero.has-video .hero-headline { text-shadow: 0 1px 2px rgba(12, 21, 47, 0.92), 0 2px 26px rgba(12, 21, 47, 0.85); }
       .hero-headline {
         font-family: var(--body);
         font-size: clamp(1.05rem, 2.2vw, 1.35rem);
         font-weight: 400;
-        color: var(--text-secondary);
-        line-height: 1.6;
+        /* --navy-100, not --slate-400. The slate that carries secondary text on navy
+           measures 6.25:1 on the flat field, but this sentence is the one the
+           visitor reads over a moving video frame, and at --navy-100 it holds 7.31:1
+           against the darkest point of the scrim. */
+        color: var(--navy-100);
+        line-height: 1.65;
+        text-wrap: pretty;
         max-width: 600px;
         margin: 0 auto 2.5rem;
         opacity: 0;
-        animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
       }
-      .hero-headline .hl { color: var(--accent); font-weight: 600; }
+      .hero-headline .hl { color: var(--orange-500); font-weight: 600; }
       .hero-cta {
         display: inline-flex;
         background: var(--accent);
-        color: var(--bg-deep);
-        padding: 0.9rem 2.5rem;
+        color: var(--text-on-accent);
+        padding: 0.95rem 2.6rem;
         border-radius: 9999px;
         font-family: var(--body);
         font-weight: 600;
         font-size: 1rem;
-        letter-spacing: -0.01em;
         transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
         opacity: 0;
         animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
       }
-      .hero-cta:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
+      .hero-cta:hover { background: var(--accent-deep); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(12, 21, 47, 0.45); }
       .hero-scroll {
-        position: absolute; bottom: 2.5rem; left: 0; right: 0;
+        position: absolute; bottom: 3rem; left: 0; right: 0;
         z-index: 3;
         display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-        color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+        color: var(--navy-200); font-size: var(--type-label); letter-spacing: 0.15em; text-transform: uppercase;
         opacity: 0; animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
       }
-      .hero.has-video .hero-scroll { text-shadow: 0 1px 18px rgba(6, 13, 27, 0.9); }
+      .hero.has-video .hero-scroll { text-shadow: 0 1px 18px rgba(12, 21, 47, 0.9); }
       .hero-scroll .chevron {
-        width: 20px; height: 20px; border-right: 1.5px solid var(--text-muted); border-bottom: 1.5px solid var(--text-muted);
+        width: 20px; height: 20px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
         transform: rotate(45deg); animation: scrollHint 2s ease-in-out infinite;
       }
       /* Playback control for the background video. WCAG 2.2.2: motion that starts on
@@ -370,19 +656,19 @@
       .hero-video-toggle {
         position: absolute;
         right: clamp(1rem, 3vw, 2rem);
-        bottom: clamp(1.5rem, 4vw, 2.25rem);
-        z-index: 4;
+        bottom: clamp(2.5rem, 5vw, 3.25rem);
+        z-index: 5;
         display: none;
         align-items: center;
         gap: 0.45rem;
         min-height: 44px;
         padding: 0.5rem 0.9rem;
-        background: rgba(12, 22, 41, 0.6);
+        background: rgba(12, 21, 47, 0.9);
         border: 1px solid var(--border);
         border-radius: 9999px;
         color: var(--text-secondary);
         font-family: var(--body);
-        font-size: 0.7rem;
+        font-size: var(--type-label);
         font-weight: 600;
         letter-spacing: 0.12em;
         text-transform: uppercase;
@@ -390,7 +676,7 @@
         transition: color 0.25s, background 0.25s, border-color 0.25s;
       }
       .hero.has-video .hero-video-toggle { display: inline-flex; }
-      .hero-video-toggle:hover { color: var(--text-primary); background: rgba(12, 22, 41, 0.85); border-color: var(--border-accent); }
+      .hero-video-toggle:hover { color: var(--text-primary); background: rgba(12, 21, 47, 0.92); border-color: var(--border-accent); }
       .hero-video-toggle svg { width: 14px; height: 14px; }
       .hero-video-toggle .icon-play { display: none; }
       .hero-video-toggle.is-paused .icon-play { display: block; }
@@ -408,14 +694,31 @@
       @media (prefers-reduced-motion: reduce) {
         .hero::before { animation: none; }
         .hero-video { display: none; }
-        .hero-video, .hero-overlay::after { transition: none; }
+        /* The floor is in this list too: a preference that flips mid-session takes
+           the video away, and the floor coming back is a 1.1s cross-fade that
+           nobody asked for. It has to land at once. */
+        .hero::before, .hero-video, .hero-overlay::after { transition: none; }
       }
 
-      /* ===== SECTION DIVIDER ===== */
+      /* ===== SECTION DIVIDER =====
+         Full-bleed, and the one piece of pure ornament on the page: a navy hair
+         rule with a short accent node at its centre. The node is the brand's own
+         orange frame path from dh-logo.svg, reduced to a mark on a line — which is
+         the whole brand idea in one element, and the reason the page can be
+         light everywhere and still read as navy-and-orange rather than grey. */
       .scene-divider {
+        position: relative;
         width: 100%; height: 1px;
-        background: linear-gradient(90deg, transparent, var(--border), transparent);
+        background: var(--border);
         margin: 0;
+      }
+      .scene-divider::after {
+        content: '';
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 72px; height: 3px;
+        background: var(--orange-500);
+        border-radius: 9999px;
       }
 
       /* ===== STORY INTRO (ACT I) ===== */
@@ -429,70 +732,86 @@
         align-items: center;
       }
       .act-label {
-        font-family: var(--display);
-        font-size: 0.7rem;
-        font-weight: 700;
+        /* Manrope, not the display cut. This label runs at 0.7rem with 0.2em of
+           tracking over an em-dash and an accent; a display face at that size is
+           thinner and stranger, and the act marker is the one piece of chrome the
+           reader meets in every section. */
+        font-family: var(--body);
+        font-size: var(--type-label);
+        font-weight: 600;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: var(--accent);
+        color: var(--accent-ink);
         margin-bottom: 1rem;
       }
       .act-intro h2 {
         font-family: var(--display);
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-size: var(--type-section);
         font-weight: 700;
-        letter-spacing: -0.04em;
-        line-height: 1.1;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        text-wrap: balance;
         margin-bottom: 1.5rem;
       }
       .act-intro p {
         color: var(--text-secondary);
-        font-size: 1.05rem;
+        font-size: var(--type-lede);
         line-height: 1.7;
+        text-wrap: pretty;
+        max-width: var(--measure);
         margin-bottom: 1rem;
       }
       .act-intro .highlight-card {
-        background: var(--bg-card);
+        background: var(--bg-surface);
         border: 1px solid var(--border);
         border-radius: 16px;
         padding: 2rem;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 2px 10px rgba(25, 42, 85, 0.05);
       }
+      /* The card's top rule is the accent going solid rather than fading out: on a
+         light surface a gradient to transparent just looks like a printing error. */
       .act-intro .highlight-card::before {
         content: '';
-        position: absolute; top: 0; left: 0; right: 0; height: 1px;
-        background: linear-gradient(90deg, var(--accent), var(--accent-light));
-        opacity: 0.4;
+        position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: var(--orange-500);
       }
       .highlight-card h3 {
         font-family: var(--display);
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 700;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.02em;
+        line-height: 1.3;
+        text-wrap: balance;
         margin-bottom: 1rem;
       }
       .highlight-card ul { list-style: none; padding: 0; }
       .highlight-card li {
-        padding: 0.5rem 0;
+        padding: 0.6rem 0;
         border-bottom: 1px solid var(--border);
         color: var(--text-secondary);
-        font-size: 0.95rem;
+        font-size: var(--type-body);
+        line-height: 1.6;
       }
       .highlight-card li:last-child { border-bottom: none; }
       .skill-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
       .skill-pill {
-        display: inline-flex; align-items: center; gap: 0.4rem;
+        display: inline-flex; align-items: center; gap: 0.45rem;
         padding: 0.4rem 0.9rem;
-        background: var(--tint-accent-bg);
-        border: 1px solid var(--tint-accent-border);
+        /* An explicit pale orange rather than an alpha wash. Over a light canvas a
+           translucent tint makes the label's contrast depend on whatever is behind
+           it; this pair is 5.03:1 every time it paints. */
+        background: var(--orange-100);
+        border: 1px solid var(--border-accent);
         border-radius: 9999px;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         font-weight: 500;
-        color: var(--accent-light);
+        color: var(--orange-700);
       }
       .skill-pill .dot {
-        width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+        width: 5px; height: 5px; border-radius: 50%; background: var(--orange-500);
+        flex-shrink: 0;
       }
 
       @media (max-width: 768px) {
@@ -507,157 +826,299 @@
       }
       .act-scenes .scenes-header h2 {
         font-family: var(--display);
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-size: var(--type-section);
         font-weight: 700;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        text-wrap: balance;
       }
       .act-scenes .scenes-header p {
         color: var(--text-secondary);
-        font-size: 1.05rem;
-        max-width: 550px;
+        font-size: var(--type-lede);
+        max-width: 55ch;
+        text-wrap: pretty;
         margin: 1rem auto 0;
       }
 
-      .scene {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        min-height: 70vh;
-        align-items: stretch;
-        margin-bottom: 2px;
+      /* The set used to be six identical 50/50 scenes, so it had no hierarchy: every
+         project asked for the same attention and none of them got it, and the
+         carousel of one was indistinguishable from the carousel of the next. Three
+         tiers instead — one project at full width, four in a 2x2 grid, and the case
+         study as a full-width strip that is the road into Act III. What changes is
+         the order a recruiter's eye takes, not the vocabulary: same white surfaces,
+         same recessed media wells, same accent rule, same navy for the punch. */
+      .project {
+        position: relative;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(25, 42, 85, 0.05);
       }
-      .scene:nth-child(even) { direction: rtl; }
-      .scene:nth-child(even) > * { direction: ltr; }
+      /* The hover rule goes solid. A gradient to transparent is a dark-world device:
+         on a light slab its thin end reads as a printing fault, not a fade.
+         Two pixels, not three: at 3px this reads as a tab stuck to the card, and the
+         rule is a hairline that arrives on hover, not a border the card wears. */
+      .project::before {
+        content: '';
+        position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: var(--orange-500);
+        transform: scaleX(0);
+        transform-origin: left;
+        z-index: 2;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .project:hover::before, .project:focus-within::before { transform: scaleX(1); }
 
-      .scene-media {
+      .project-featured {
+        display: grid;
+        grid-template-columns: 1.32fr 1fr;
+        margin-bottom: 1.5rem;
+        transition: box-shadow 0.35s;
+      }
+      .project-featured:hover { box-shadow: 0 22px 50px rgba(25, 42, 85, 0.14); }
+      .project-featured .project-body { padding: clamp(2rem, 3.6vw, 3.25rem); }
+
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .project-card {
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s;
+      }
+      .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 44px rgba(25, 42, 85, 0.12);
+      }
+
+      /* Media well. Recessed, not raised: a flat inset grey shows the screenshot's
+         own edge while it decodes, where a white slot would make the image look
+         cropped. The tall well is shared by the featured card and the grid. */
+      .project-media {
         position: relative;
         overflow: hidden;
-        background: var(--bg-surface);
+        background: var(--bg-inset);
         aspect-ratio: 16/10;
       }
-      .scene-media .carousel {
+      .project-media .carousel { width: 100%; height: 100%; }
+      .project-media .carousel-inner { height: 100%; }
+      .project-media .carousel-item { height: 100%; }
+      /* Each screenshot is a <button>, so the fifteen captures are in the tab order
+         and answer Enter and Space without a hand-written key handler (WCAG 2.1.1).
+         `role="button"` on the <img> would have been the other way to do it and it is
+         the worse one: the override takes the image role away, so the alt that
+         describes the screenshot stops being announced, and the activation has to be
+         rebuilt by hand. The button's aria-label names the project instead. */
+      .project-media .media-open {
+        display: block;
         width: 100%; height: 100%;
+        padding: 0; border: 0;
+        background: none;
+        cursor: pointer;
       }
-      .scene-media .carousel-inner { height: 100%; }
-      .scene-media .carousel-item { height: 100%; }
-      .scene-media .carousel-item img {
+      .project-media .carousel-item img {
         width: 100%; height: 100%;
         object-fit: cover;
         transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .scene-media:hover .carousel-item.active img { transform: scale(1.03); }
-      .scene-media .carousel-indicators {
-        position: absolute; bottom: 1.75rem; left: 50%; transform: translateX(-50%);
-        margin: 0; gap: 0.4rem;
+      /* Inward offset: the well clips at its own edge, so the page-wide 3px outward
+         ring would be cut off entirely. The white hairline under the navy ring is
+         the same non-colour cue the active carousel dot carries — the ring sits on
+         an arbitrary screenshot, and navy alone disappears into a dark frame. */
+      .project-media .media-open:focus-visible {
+        outline-offset: -3px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
-      .scene-media .carousel-indicators [data-bs-slide-to] {
+      .project-media:hover .carousel-item.active img { transform: scale(1.03); }
+      .project-media .carousel-indicators {
+        position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
+        margin: 0; gap: 0.4rem; z-index: 3;
+      }
+      .project-media .carousel-indicators [data-bs-slide-to] {
         position: relative;
         width: 6px; height: 6px; border-radius: 50%;
         background: rgba(255,255,255,0.4); border: none;
         opacity: 1;
       }
       /* A 6px dot is a 12px target. The dot stays 6px; the hit area does not. */
-      .scene-media .carousel-indicators [data-bs-slide-to]::before {
+      .project-media .carousel-indicators [data-bs-slide-to]::before {
         content: '';
         position: absolute; top: 50%; left: 50%;
         width: 44px; height: 44px;
         transform: translate(-50%, -50%);
       }
-      .scene-media .carousel-indicators .active { background: var(--accent); }
-      .scene-media .carousel-control-prev,
-      .scene-media .carousel-control-next { width: 15%; opacity: 0; transition: opacity 0.3s; }
-      .scene-media:hover .carousel-control-prev,
-      .scene-media:hover .carousel-control-next,
-      .scene-media:focus-within .carousel-control-prev,
-      .scene-media:focus-within .carousel-control-next { opacity: 0.6; }
+      .project-media .carousel-indicators .active {
+        background: var(--orange-500);
+        /* The active dot sits over an arbitrary screenshot, where 2.79:1 against
+           white is not enough on its own. The white ring is the non-colour cue and
+           the reason the dot is still findable on a pale frame. */
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+      }
+      /* The arrows are 18% of the well and fade in on hover — but at rest they were
+         still sitting in the hit-test tree, so a 103x356 slab of the screenshot was
+         dead to the pointer and to a tap. `pointer-events` is what makes "invisible"
+         mean "not there"; the three states that show them turn it back on. */
+      .project-media .carousel-control-prev,
+      .project-media .carousel-control-next { width: 18%; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 3; }
+      .project-media:hover .carousel-control-prev,
+      .project-media:hover .carousel-control-next,
+      .project-media:focus-within .carousel-control-prev,
+      .project-media:focus-within .carousel-control-next { opacity: 0.6; pointer-events: auto; }
       /* Touch never fires :hover, so the arrows cannot depend on it to exist. */
       @media (hover: none) {
-        .scene-media .carousel-control-prev,
-        .scene-media .carousel-control-next { opacity: 0.35; }
+        .project-media .carousel-control-prev,
+        .project-media .carousel-control-next { opacity: 0.45; pointer-events: auto; }
       }
-      .scene-media .carousel-control-prev-icon,
-      .scene-media .carousel-control-next-icon { width: 1.2rem; height: 1.2rem; }
+      .project-media .carousel-control-prev-icon,
+      .project-media .carousel-control-next-icon { width: 1.2rem; height: 1.2rem; }
 
-      .scene-body {
+      .project-body {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        padding: clamp(2.5rem, 5vw, 4rem);
-        background: var(--bg-surface);
+        flex: 1;
+        padding: 1.5rem;
         position: relative;
       }
-      .scene-body::before {
-        content: '';
-        position: absolute; top: 0; left: 0; right: 0; height: 2px;
-        background: linear-gradient(90deg, var(--accent), var(--accent-light));
-        opacity: 0;
-        transition: opacity 0.5s;
-      }
-      .scene:hover .scene-body::before { opacity: 1; }
-      .scene-number {
-        font-family: var(--display);
-        font-size: 0.7rem;
-        font-weight: 700;
+      .project-featured .project-body { justify-content: center; }
+      /* The index is Manrope, not the display cut: at 0.7rem with 0.2em of tracking a
+         geometric display face is a legibility bug wearing a style. */
+      .project-index {
+        font-family: var(--body);
+        font-size: var(--type-label);
+        font-weight: 600;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
+        color: var(--accent-ink);
+        margin-bottom: 0.7rem;
       }
-      .scene-body h3 {
+      .project-index .muted { color: var(--text-muted); }
+      .project-body h3 {
         font-family: var(--display);
-        font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+        font-size: var(--type-card);
         font-weight: 700;
-        letter-spacing: -0.03em;
-        margin-bottom: 1rem;
+        letter-spacing: -0.015em;
+        line-height: 1.2;
+        text-wrap: balance;
+        margin-bottom: 0.75rem;
       }
-      .scene-body p {
+      .project-featured .project-body h3 { font-size: clamp(1.6rem, 2.9vw, 2.15rem); }
+      .project-body p {
         color: var(--text-secondary);
-        font-size: 0.95rem;
+        font-size: var(--type-body);
         line-height: 1.7;
-        margin-bottom: 1.5rem;
+        text-wrap: pretty;
+        max-width: var(--measure);
+        margin-bottom: 1.25rem;
       }
-      .scene-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
-      .scene-tag {
+      .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+      .project-tag {
         padding: 0.3rem 0.7rem;
-        background: var(--tint-accent-subtle);
+        background: var(--orange-100);
         border: 1px solid var(--border-accent);
         border-radius: 6px;
         font-size: 0.75rem;
         font-weight: 500;
-        color: var(--accent-light);
+        color: var(--orange-700);
       }
-      .scene-links { display: flex; gap: 1rem; align-items: center; }
-      .scene-links a {
-        display: inline-flex; align-items: center; gap: 0.4rem;
-        font-size: 0.85rem; font-weight: 600;
+      .project-links { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; margin-top: auto; }
+      .project-links a {
+        display: inline-flex; align-items: center; gap: 0.45rem;
+        min-height: 32px;
+        font-size: var(--type-small); font-weight: 600;
         color: var(--text-primary);
         transition: color 0.25s;
       }
-      .scene-links a:hover { color: var(--accent-light); }
-      .scene-links .icon { width: 14px; height: 14px; }
-      .scene-links .tag-label {
-        display: inline-flex; align-items: center; gap: 0.3rem;
-        font-size: 0.75rem; color: var(--text-muted); font-weight: 500;
+      /* On touch the same link is a thumb target, not a mouse one. */
+      @media (hover: none) {
+        .project-links a { min-height: 44px; }
+      }
+      /* The link icon is painted, not inherited-as-body-text: it wears the brand
+         navy at rest and --accent-ink on hover. Both clear 3:1 on white, which the
+         vivid orange alone does not (2.79:1). */
+      .project-links a .icon { color: var(--navy-700); transition: color 0.25s; }
+      .project-links a:hover { color: var(--accent-ink); }
+      .project-links a:hover .icon { color: var(--accent-ink); }
+      .project-links .icon { width: 15px; height: 15px; }
+      .project-links .project-meta {
+        display: inline-flex; align-items: center; gap: 0.35rem;
+        font-size: 0.78rem; color: var(--text-muted); font-weight: 500;
       }
 
+      /* The strip is the section's exit door: the case study is not a sixth card
+         here, it is the bridge to Act III — so it is one line, full width, and the
+         only element in the set with no screenshots of its own. It is set apart by
+         geometry (full width, one line, a pill CTA) and by the divider node the
+         section breaks already use, not by a thick coloured edge: a 4px side border
+         on a card is the loudest tell of a generated layout, and the accent has one
+         strong region per viewport already, down at the foot of the hero. */
+      .project-strip {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        padding: 1.75rem clamp(1.5rem, 3vw, 2.5rem);
+        border-radius: 18px;
+      }
+      .project-strip .project-index::before {
+        content: '';
+        display: inline-block;
+        width: 24px; height: 3px;
+        margin-right: 0.65rem;
+        vertical-align: 0.28em;
+        background: var(--orange-500);
+        border-radius: 9999px;
+      }
+      /* The strip's title is a <p>, not a heading, and it is set here to the exact
+         type the <h3> was painting: UA 1.17em bold in the body face. It names the
+         case study that the section below already owns as its <h2>, so as a heading
+         it put the same string twice in every screen reader's heading list, one
+         level apart, for a band whose job is to point at that section. */
+      .project-strip .strip-title { font-size: 1.17em; font-weight: 700; margin-bottom: 0.4rem; max-width: none; }
+      .project-strip p { margin-bottom: 0; max-width: 62ch; }
+      .project-strip .btn-strip {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        white-space: nowrap;
+        min-height: 44px;
+        padding: 0.65rem 1.4rem;
+        border-radius: 9999px;
+        background: var(--navy-700);
+        color: var(--mist-200);
+        font-size: var(--type-small);
+        font-weight: 600;
+        transition: background 0.25s, transform 0.2s;
+      }
+      .project-strip .btn-strip:hover { background: var(--navy-600); transform: translateY(-1px); }
+      .project-strip .btn-strip svg { width: 15px; height: 15px; }
+
+      @media (max-width: 900px) {
+        .project-featured { grid-template-columns: 1fr; }
+      }
       @media (max-width: 768px) {
-        .scene { grid-template-columns: 1fr; min-height: auto; }
-        .scene:nth-child(even) { direction: ltr; }
-        .scene-media { aspect-ratio: 16/10; }
+        .project-grid { grid-template-columns: 1fr; }
+        .project-strip { grid-template-columns: 1fr; }
+        .project-strip .btn-strip { justify-content: center; }
       }
 
-      /* ===== CASE STUDY CLIMAX (ACT III) ===== */
+      /* ===== CASE STUDY CLIMAX (ACT III) =====
+         The white slab that separates the project run from the value section, and
+         the one place the page lets a large number be the loudest thing in the
+         frame. */
       .act-climax {
         padding: clamp(5rem, 12vw, 10rem) 0;
         position: relative;
         overflow: hidden;
+        background: var(--bg-surface);
       }
       .act-climax::before {
         content: '';
         position: absolute; inset: 0;
         background:
           radial-gradient(ellipse at 30% 50%, var(--tint-accent-subtle) 0%, transparent 50%),
-          radial-gradient(ellipse at 70% 30%, rgba(25, 42, 85, 0.08) 0%, transparent 50%);
+          radial-gradient(ellipse at 70% 30%, rgba(25, 42, 85, 0.05) 0%, transparent 50%);
         pointer-events: none;
       }
       .climax-header {
@@ -667,15 +1128,18 @@
       }
       .climax-header h2 {
         font-family: var(--display);
-        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-size: var(--type-climax);
         font-weight: 700;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        text-wrap: balance;
         margin-bottom: 1rem;
       }
       .climax-header p {
         color: var(--text-secondary);
-        font-size: 1.1rem;
-        max-width: 600px;
+        font-size: var(--type-lede);
+        max-width: 62ch;
+        text-wrap: pretty;
         margin: 0 auto;
         line-height: 1.7;
       }
@@ -689,54 +1153,73 @@
       }
       .climax-narrative h3 {
         font-family: var(--display);
-        font-size: 1.6rem;
+        font-size: 1.55rem;
         font-weight: 700;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.015em;
+        line-height: 1.25;
+        text-wrap: balance;
         margin-bottom: 1.25rem;
       }
       .climax-narrative p {
         color: var(--text-secondary);
-        font-size: 1rem;
+        font-size: var(--type-lede);
         line-height: 1.75;
+        text-wrap: pretty;
+        max-width: var(--measure);
         margin-bottom: 1rem;
       }
       .climax-narrative ul { list-style: none; padding: 0; margin-top: 1.5rem; }
       .climax-narrative li {
-        padding: 0.75rem 0;
+        padding: 0.8rem 0;
         border-bottom: 1px solid var(--border);
         color: var(--text-secondary);
-        font-size: 0.95rem;
+        font-size: var(--type-body);
+        line-height: 1.6;
       }
       .climax-narrative li:last-child { border-bottom: none; }
       .climax-narrative li strong { color: var(--text-primary); font-weight: 600; }
 
+      /* The metrics panel is the second navy block and the payoff of the act: on
+         brand navy the vivid orange measures 4.66:1, so the numbers can be the
+         accent at display size — which is the one thing this palette cannot do on
+         the light canvas, where the same orange measures 2.50:1. */
       .metrics-panel {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        /* 1px gaps over a light hairline: the dividers are the panel's own surface
+           showing through, so they cannot drift out of register with the cards. */
+        gap: 1px;
+        background: rgba(242, 242, 242, 0.22);
+        border: 1px solid rgba(242, 242, 242, 0.22);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 18px 48px rgba(12, 21, 47, 0.18);
       }
       .metric-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 1.75rem;
+        background: var(--bg-navy);
+        padding: 1.9rem 1.5rem;
         text-align: center;
-        transition: border-color 0.3s, transform 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition: background 0.3s;
       }
-      .metric-card:hover { border-color: var(--shadow-accent); transform: translateY(-3px); }
+      .metric-card:hover { background: var(--navy-600); }
       .metric-card .number {
         font-family: var(--display);
-        font-size: clamp(2rem, 4vw, 2.8rem);
-        font-weight: 700;
-        letter-spacing: -0.04em;
-        color: var(--accent);
+        font-size: clamp(2.1rem, 4vw, 2.9rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--orange-500);
         line-height: 1;
-        margin-bottom: 0.5rem;
+        font-variant-numeric: tabular-nums;
+        margin-bottom: 0.6rem;
       }
       .metric-card .desc {
-        font-size: 0.8rem;
-        color: var(--text-muted);
+        font-size: 0.82rem;
+        color: var(--slate-400);
         line-height: 1.4;
+        text-wrap: balance;
       }
 
       @media (max-width: 768px) {
@@ -749,77 +1232,99 @@
         padding: clamp(5rem, 12vw, 10rem) 0;
         position: relative;
         overflow: hidden;
+        background: var(--bg-canvas);
       }
       .act-value::before {
         content: '';
         position: absolute; inset: 0;
-        background: radial-gradient(ellipse at 50% 50%, rgba(250, 145, 14, 0.04) 0%, transparent 60%);
+        background: radial-gradient(ellipse at 50% 50%, var(--tint-accent-subtle) 0%, transparent 60%);
         pointer-events: none;
       }
       .value-header { text-align: center; margin-bottom: clamp(3rem, 6vw, 5rem); position: relative; }
       .value-header h2 {
         font-family: var(--display);
-        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-size: var(--type-climax);
         font-weight: 800;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        text-wrap: balance;
         margin-bottom: 1rem;
       }
-      .value-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 550px; margin: 0 auto; line-height: 1.7; }
+      .value-header p { color: var(--text-secondary); font-size: var(--type-lede); max-width: 58ch; text-wrap: pretty; margin: 0 auto; line-height: 1.7; }
       .value-pillars {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 2px;
+        background: var(--border);
         position: relative;
+        border-radius: 16px;
+        overflow: hidden;
       }
       .value-pillar {
         background: var(--bg-surface);
         padding: clamp(2rem, 4vw, 3rem);
         position: relative;
-        transition: background 0.3s;
+        transition: box-shadow 0.3s;
       }
-      .value-pillar:hover { background: var(--bg-card); }
+      /* On a light slab the hover state cannot be a darker fill — that reads as
+         pressed. It lifts instead, and the accent arrives as the rule and the icon
+         at the same time, so the state is carried by shape and hue, not hue alone. */
+      .value-pillar:hover {
+        box-shadow: 0 10px 30px rgba(25, 42, 85, 0.1);
+        z-index: 1;
+      }
       .value-pillar::after {
         content: '';
         position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-        width: 0; height: 2px;
-        background: var(--accent);
+        width: 0; height: 3px;
+        background: var(--orange-500);
         transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       }
       .value-pillar:hover::after { width: 60%; }
+      /* The pillar icon wears the brand navy at rest — 13:1 on white, where the
+         logo orange would measure 2.27:1 and fail the 3:1 a meaningful graphic
+         owes. It takes --accent-ink on hover, paired with the rule above. */
       .value-pillar-icon {
-        color: var(--accent);
-        margin-bottom: 0.75rem;
+        color: var(--navy-700);
+        margin-bottom: 0.9rem;
+        transition: color 0.3s;
       }
-      .value-pillar-icon svg { width: 28px; height: 28px; }
+      .value-pillar:hover .value-pillar-icon { color: var(--orange-700); }
+      .value-pillar-icon svg { width: 28px; height: 28px; stroke-width: 1.75; }
       .value-pillar h3 {
         font-family: var(--display);
-        font-size: 1.25rem;
+        font-size: 1.22rem;
         font-weight: 700;
         letter-spacing: -0.02em;
         margin-bottom: 0.75rem;
       }
-      .value-pillar p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; }
+      .value-pillar p { color: var(--text-secondary); font-size: var(--type-body); line-height: 1.65; text-wrap: pretty; }
+      /* Was the accent at 12% opacity, which is 0.3:1 on a light slab — invisible.
+         The index is tinted navy and stays behind the copy, out of the way. */
       .value-pillar-num {
         font-family: var(--display);
-        font-size: 3.5rem;
+        font-size: 3.25rem;
         font-weight: 800;
-        color: var(--accent);
-        opacity: 0.12;
+        color: var(--navy-500);
+        opacity: 0.13;
         position: absolute;
-        top: 1.5rem; right: 1.5rem;
+        top: 1.25rem; right: 1.5rem;
         line-height: 1;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.02em;
+        font-variant-numeric: tabular-nums;
       }
 
       @media (max-width: 768px) { .value-pillars { grid-template-columns: 1fr; gap: 1px; } }
 
-      /* ===== CONTACT RESOLUTION ===== */
+      /* ===== CONTACT RESOLUTION =====
+         The close. A navy slab on the light canvas, bookending the hero: the page
+         now opens and ends in the brand's own colour, and the only saturated thing
+         on it is the action. */
       .act-resolution {
         padding: clamp(5rem, 10vw, 8rem) 0;
       }
       .resolution-box {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
+        background: var(--bg-navy);
         border-radius: 20px;
         padding: clamp(2.5rem, 5vw, 4rem);
         display: grid;
@@ -828,83 +1333,102 @@
         align-items: center;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 20px 56px rgba(12, 21, 47, 0.2);
       }
+      /* The accent glows up from the bottom-right corner of the slab. This is the
+         same warm bloom the hero carries, at a size that can hold a whole corner. */
       .resolution-box::before {
         content: '';
-        position: absolute; top: 0; left: 0; right: 0; height: 1px;
-        background: linear-gradient(90deg, var(--accent), var(--accent-light));
-        opacity: 0.4;
+        position: absolute; bottom: -30%; right: -12%;
+        width: 55%; height: 160%;
+        background: radial-gradient(ellipse at center, rgba(250, 145, 14, 0.18) 0%, transparent 70%);
+        pointer-events: none;
       }
+      .resolution-box > * { position: relative; }
       .resolution-box h3 {
         font-family: var(--display);
-        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-size: var(--type-card);
         font-weight: 700;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.015em;
+        line-height: 1.25;
+        text-wrap: balance;
         margin-bottom: 1rem;
       }
       .resolution-box p {
         color: var(--text-secondary);
-        font-size: 1rem;
+        font-size: var(--type-lede);
         line-height: 1.7;
+        text-wrap: pretty;
+        max-width: 52ch;
       }
       .resolution-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-end; }
       .btn-primary {
-        display: inline-flex; align-items: center; gap: 0.4rem;
+        display: inline-flex; align-items: center; gap: 0.45rem;
         background: var(--accent);
-        color: var(--bg-deep);
-        padding: 0.8rem 1.75rem;
+        color: var(--text-on-accent);
+        padding: 0.85rem 1.8rem;
         border-radius: 9999px;
         font-weight: 600;
         font-size: 0.9rem;
         transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
       }
-      .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); }
+      .btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(12, 21, 47, 0.5); }
       .btn-outline {
-        display: inline-flex; align-items: center; gap: 0.4rem;
+        display: inline-flex; align-items: center; gap: 0.45rem;
         background: transparent;
         color: var(--text-primary);
-        padding: 0.8rem 1.75rem;
+        padding: 0.85rem 1.8rem;
         border-radius: 9999px;
-        border: 1px solid var(--border);
+        border: 1px solid var(--border-strong);
         font-weight: 600;
         font-size: 0.9rem;
-        transition: border-color 0.25s, transform 0.2s;
+        transition: border-color 0.25s, background 0.25s, transform 0.2s;
       }
-      .btn-outline:hover { border-color: var(--text-secondary); transform: translateY(-1px); }
+      .btn-outline:hover { border-color: var(--slate-400); background: rgba(242, 242, 242, 0.08); transform: translateY(-1px); }
 
       @media (max-width: 768px) {
         .resolution-box { grid-template-columns: 1fr; }
         .resolution-actions { justify-content: flex-start; }
       }
 
-      /* ===== FOOTER ===== */
+      /* ===== FOOTER =====
+         Navy, so the mark never changes colour between placements, and the page
+         closes on the same field it opened on. */
       .site-footer {
-        border-top: 1px solid var(--border);
-        padding: 2rem 0;
+        background: var(--bg-navy);
+        padding: 2.25rem 0;
       }
       .footer-inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: 1.25rem;
       }
       .footer-inner span {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--text-secondary);
       }
-      .footer-social { display: flex; gap: 1rem; }
+      .footer-social { display: flex; gap: 0.6rem; }
       .footer-social a {
-        width: 32px; height: 32px;
+        width: 40px; height: 40px;
         display: flex; align-items: center; justify-content: center;
-        border-radius: 8px;
-        background: var(--bg-card);
+        border-radius: 10px;
+        background: rgba(242, 242, 242, 0.06);
         border: 1px solid var(--border);
-        color: var(--text-muted);
+        color: var(--text-secondary);
         transition: color 0.25s, border-color 0.25s, background 0.25s;
       }
-      .footer-social a:hover { color: var(--text-primary); border-color: var(--text-secondary); background: var(--bg-surface); }
-      .footer-social .icon { width: 15px; height: 15px; }
+      /* The 40px chip is the drawn target; the hit area is 44px, which is what a
+         thumb on a phone actually lands on. */
+      .footer-social a::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+      }
+      .footer-social a { position: relative; }
+      .footer-social a:hover { color: var(--text-primary); border-color: var(--border-strong); background: rgba(242, 242, 242, 0.12); }
+      .footer-social .icon { width: 16px; height: 16px; }
       .footer-brand {
         display: flex;
         align-items: center;
@@ -913,23 +1437,27 @@
       .footer-logo {
         height: 28px;
         width: auto;
-        color: var(--text-muted);
-        opacity: 0.6;
-        transition: opacity 0.25s;
+        color: var(--text-secondary);
+        transition: color 0.25s;
       }
-      .footer-brand:hover .footer-logo { opacity: 1; }
+      .footer-brand:hover .footer-logo { color: var(--text-primary); }
 
       /* ===== LIGHTBOX MODAL ===== */
       .lightbox-modal {
         position: fixed; inset: 0; z-index: 200;
         display: flex; align-items: center; justify-content: center;
         opacity: 0; visibility: hidden;
-        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+        /* visibility flips instantly on the way in and is delayed on the way out.
+           With `visibility 0.3s` on both sides, the computed value at the instant
+           openLightbox() calls closeBtn.focus() is still `hidden`, an element
+           inside a hidden subtree is not focusable, and the focus call is a silent
+           no-op — so the dialog opened with focus still behind it. */
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.3s;
       }
-      .lightbox-modal.active { opacity: 1; visibility: visible; }
+      .lightbox-modal.active { opacity: 1; visibility: visible; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s; }
       .lightbox-overlay {
         position: absolute; inset: 0;
-        background: rgba(12, 22, 41, 0.92);
+        background: rgba(12, 21, 47, 0.9);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
       }
@@ -943,35 +1471,35 @@
         overflow: hidden;
         transform: scale(0.95);
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 32px 90px rgba(12, 21, 47, 0.6);
       }
       .lightbox-modal.active .lightbox-container { transform: scale(1); }
       .lightbox-close {
         position: absolute; top: 1rem; right: 1rem; z-index: 10;
-        width: 40px; height: 40px;
+        width: 44px; height: 44px;
         display: flex; align-items: center; justify-content: center;
-        background: rgba(12, 22, 41, 0.7);
+        background: rgba(12, 21, 47, 0.78);
         border: 1px solid var(--border);
         border-radius: 10px;
         color: var(--text-secondary);
         cursor: pointer;
         transition: color 0.25s, background 0.25s, border-color 0.25s;
       }
-      .lightbox-close:hover { color: var(--text-primary); background: rgba(12, 22, 41, 0.9); border-color: var(--text-muted); }
+      .lightbox-close:hover { color: var(--text-primary); background: rgba(12, 21, 47, 0.95); border-color: var(--border-strong); }
       .lightbox-close svg { width: 20px; height: 20px; }
       .lightbox-nav {
         position: absolute; top: 50%; z-index: 10;
         transform: translateY(-50%);
         width: 44px; height: 44px;
         display: flex; align-items: center; justify-content: center;
-        background: rgba(12, 22, 41, 0.7);
+        background: rgba(12, 21, 47, 0.78);
         border: 1px solid var(--border);
         border-radius: 10px;
         color: var(--text-secondary);
         cursor: pointer;
         transition: color 0.25s, background 0.25s, border-color 0.25s;
       }
-      .lightbox-nav:hover { color: var(--text-primary); background: rgba(12, 22, 41, 0.9); border-color: var(--text-muted); }
+      .lightbox-nav:hover { color: var(--text-primary); background: rgba(12, 21, 47, 0.95); border-color: var(--border-strong); }
       .lightbox-nav svg { width: 22px; height: 22px; }
       .lightbox-prev { left: 1rem; }
       .lightbox-next { right: 1rem; }
@@ -981,6 +1509,12 @@
         min-height: 0;
         overflow: hidden;
       }
+      /* One class decides whether anything is painted in the media area. `.loaded` is
+         the only thing that brings the image in, and it now arrives on failure as
+         well as on success: with an onload-only gate, a 404 was pixel-identical to a
+         load still in flight, and the visitor got an empty frame with a counter
+         floating over it. `.failed` only refines that state — it takes the frame
+         away so the message can take its place. */
       .lightbox-image {
         max-width: 100%; max-height: 100%;
         object-fit: contain;
@@ -989,11 +1523,45 @@
         transition: opacity 0.3s ease;
       }
       .lightbox-image.loaded { opacity: 1; }
+      .lightbox-image.loaded.failed { display: none; }
+      .lightbox-error {
+        display: flex; flex-direction: column; align-items: center;
+        text-align: center;
+        gap: 0.6rem;
+        max-width: 34ch;
+        /* The counter is absolutely positioned over the bottom of this area, so the
+           message keeps clear of it instead of printing on top of it. */
+        padding-bottom: 2.5rem;
+      }
+      .lightbox-error[hidden] { display: none; }
+      .lightbox-error svg { width: 28px; height: 28px; color: var(--text-muted); }
+      .lightbox-error-title {
+        font-family: var(--display);
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .lightbox-error-note { font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); }
+      .lightbox-retry {
+        margin-top: 0.35rem;
+        min-height: 40px;
+        padding: 0.55rem 1.35rem;
+        border: 1px solid var(--border-strong);
+        border-radius: 9999px;
+        background: transparent;
+        color: var(--text-primary);
+        font-family: var(--body);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.25s, border-color 0.25s;
+      }
+      .lightbox-retry:hover { background: var(--bg-inset); border-color: var(--text-muted); }
       .lightbox-footer {
         display: flex; align-items: center; justify-content: space-between;
         gap: 1.5rem;
         padding: 1.25rem 1.75rem;
-        background: var(--bg-card);
+        background: var(--navy-900);
         border-top: 1px solid var(--border);
       }
       .lightbox-project-info { flex: 1; min-width: 0; }
@@ -1022,39 +1590,42 @@
         border-radius: 5px;
         font-size: 0.7rem;
         font-weight: 500;
-        color: var(--accent-light);
+        color: var(--accent-ink);
       }
       .lightbox-project-link {
-        display: inline-flex; align-items: center; gap: 0.4rem;
+        display: inline-flex; align-items: center; gap: 0.45rem;
         flex-shrink: 0;
-        padding: 0.6rem 1.2rem;
+        padding: 0.65rem 1.25rem;
         background: var(--accent);
-        color: var(--bg-deep);
+        color: var(--text-on-accent);
         border-radius: 9999px;
         font-size: 0.8rem;
         font-weight: 600;
         white-space: nowrap;
         transition: background 0.25s, transform 0.2s;
       }
-      .lightbox-project-link:hover { background: var(--accent-light); transform: translateY(-1px); }
+      .lightbox-project-link:hover { background: var(--accent-deep); transform: translateY(-1px); }
       .lightbox-project-link svg { width: 14px; height: 14px; }
       .lightbox-counter {
         position: absolute; bottom: 5.5rem; left: 50%;
         transform: translateX(-50%);
         padding: 0.3rem 0.8rem;
-        background: rgba(12, 22, 41, 0.7);
+        background: rgba(12, 21, 47, 0.8);
         border-radius: 9999px;
         font-size: 0.7rem;
         font-weight: 500;
-        color: var(--text-muted);
+        color: var(--slate-400);
         letter-spacing: 0.05em;
+        font-variant-numeric: tabular-nums;
       }
-      .scene-media .carousel-item img { cursor: pointer; }
 
       @media (max-width: 768px) {
         .lightbox-container { width: 95vw; max-height: 95vh; border-radius: 12px; }
         .lightbox-content { padding: 3rem 1rem; }
-        .lightbox-nav { width: 36px; height: 36px; }
+        /* Held at 40px rather than dropped to 36: on a phone the lightbox arrows
+           are the only navigation in the room, and they are the least forgiving
+           target on the page. */
+        .lightbox-nav { width: 40px; height: 40px; }
         .lightbox-nav svg { width: 18px; height: 18px; }
         .lightbox-prev { left: 0.5rem; }
         .lightbox-next { right: 0.5rem; }
@@ -1067,7 +1638,8 @@
   <body>
     <a href="#sobre-mi" class="skip-link">Saltar al contenido</a>
     <!-- ===== NAVBAR ===== -->
-    <nav class="navbar-cinematic" id="navbar" aria-label="Navegación principal">
+    <nav class="navbar-cinematic on-navy" id="navbar" aria-label="Navegación principal">
+      <div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
       <div class="container-narrow">
         <a class="nav-brand" href="#inicio" aria-label="Diego Hernández — Inicio">
           <svg class="nav-logo" viewBox="0 0 2010 2010" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1076,7 +1648,7 @@
             <path class="brand-mark" d="M1812.18 200.482C1902.89 246.81 1965 341.151 1965 450V1674C1965 1828.64 1839.64 1954 1685 1954H464C357.707 1954 265.248 1894.77 217.824 1807.52C255.986 1827.01 299.209 1838 345 1838H1566C1720.64 1838 1846 1712.64 1846 1558V334C1846 285.654 1833.75 240.169 1812.18 200.482Z"/>
           </svg>
         </a>
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
           <span></span><span></span><span></span>
         </button>
         <ul class="nav-links" id="navLinks">
@@ -1090,12 +1662,15 @@
     </nav>
 
     <!-- ===== HERO ===== -->
-    <header class="hero" id="inicio">
-      <!-- Background video: no src in markup. The JS gate below promotes data-src → src
-           only after `load`, only on a connection that can afford it, and abandons the
-           download if the first frame is late — so the 4 MiB file never competes with
-           the LCP, never downloads at all for reduced-motion / Data Saver / 2G visitors,
-           and never pops in over a hero the visitor is already reading. -->
+    <header class="hero on-navy" id="inicio">
+      <!-- Background video — this is the hero's background, and the gradient floor
+           under it is the hero's load state and its failure state, not a second
+           background. No src in markup: the JS gate below promotes data-src → src
+           only after `load`, only on a connection that can afford it, and drops the
+           whole element the moment the file cannot arrive — so the 4 MiB never
+           competes with the LCP, never downloads at all for reduced-motion / Data
+           Saver / 2G visitors, and never pops in over a hero the visitor is already
+           reading. Whatever the outcome, the floor is the complete hero. -->
       <video
         class="hero-video"
         id="heroVideo"
@@ -1119,6 +1694,7 @@
       </button>
       <div class="hero-content">
         <h1 class="hero-name">DIEGO <span class="accent">HERNÁNDEZ</span></h1>
+        <p class="hero-role">Full Stack JavaScript · UX/UI</p>
         <p class="hero-headline">
           Desarrollo <span class="hl">soluciones digitales</span> con claridad, impacto y experiencia de usuario.
         </p>
@@ -1137,7 +1713,7 @@
           <div class="intro-grid">
             <div class="reveal">
               <span class="act-label">Acto I — El origen</span>
-              <h2>No soy solo desarrollador.<br/>Soy <span style="color: var(--accent)">marketing que codea</span>.</h2>
+              <h2>No soy solo desarrollador.<br/>Soy <span class="accent-text">marketing que codea</span>.</h2>
               <p>
                 Profesional de marketing con formación en Desarrollo Full Stack JavaScript y Diseño UX/UI.
                 Mi enfoque está en crear soluciones digitales con sentido de producto, buena experiencia de usuario
@@ -1171,254 +1747,229 @@
 
       <div class="scene-divider"></div>
 
-      <!-- ===== ACT II — PROJECT SCENES ===== -->
+      <!-- ===== ACT II — PROJECT SET =====
+           Three tiers. The featured card is the only project that gets a full-width
+           stage, the grid holds four, and the case study closes as a strip that
+           hands off to Act III. The order is the argument: backend first (it is the
+           one project a front-end-only candidate list does not have), then the apps,
+           then the analysis. -->
       <section class="act-scenes" id="proyectos">
         <div class="container-narrow">
           <div class="scenes-header reveal">
             <span class="act-label">Acto II — Las pruebas</span>
             <h2>Proyectos destacados</h2>
-            <p>Cada proyecto es una escena que demuestra una faceta distinta de mi trabajo.</p>
+            <p>Cinco aplicaciones con su repositorio abierto y un caso de estudio. Una API con autenticación, un e-commerce y tres aplicaciones de consumo de APIs: cada una demuestra una capa distinta de mi trabajo.</p>
           </div>
-        </div>
 
-        <!-- SCENE 1: Mi Pokédex -->
-        <div class="scene reveal">
-          <div class="scene-media">
-            <div id="scenePokedex" class="carousel slide">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#scenePokedex" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#scenePokedex" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#scenePokedex" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <!-- FEATURED — Soft Jobs API -->
+          <article class="project project-featured reveal">
+            <div class="project-media">
+              <div id="sceneSoftJobs" class="carousel slide">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#sceneSoftJobs" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Vista 1"></button>
+                  <button type="button" data-bs-target="#sceneSoftJobs" data-bs-slide-to="1" aria-label="Vista 2"></button>
+                  <button type="button" data-bs-target="#sceneSoftJobs" data-bs-slide-to="2" aria-label="Vista 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <button class="media-open" type="button" aria-label="Ampliar capturas de Soft Jobs API"><img src="./assets/images/soft-jobs-api-01-1280.webp" srcset="./assets/images/soft-jobs-api-01-640.webp 640w, ./assets/images/soft-jobs-api-01-1280.webp 1280w, ./assets/images/soft-jobs-api-01-1911.webp 1911w" sizes="(max-width: 900px) 100vw, 60vw" loading="lazy" decoding="async" alt="Soft Jobs API documentación de la API de empleos" /></button>
+                  </div>
+                  <div class="carousel-item">
+                    <button class="media-open" type="button" aria-label="Ampliar capturas de Soft Jobs API"><img src="./assets/images/soft-jobs-api-02-1280.webp" srcset="./assets/images/soft-jobs-api-02-640.webp 640w, ./assets/images/soft-jobs-api-02-1280.webp 1280w, ./assets/images/soft-jobs-api-02-1913.webp 1913w" sizes="(max-width: 900px) 100vw, 60vw" loading="lazy" decoding="async" alt="Soft Jobs API flujo de registro y autenticación" /></button>
+                  </div>
+                  <div class="carousel-item">
+                    <button class="media-open" type="button" aria-label="Ampliar capturas de Soft Jobs API"><img src="./assets/images/soft-jobs-api-03-1280.webp" srcset="./assets/images/soft-jobs-api-03-640.webp 640w, ./assets/images/soft-jobs-api-03-1280.webp 1280w, ./assets/images/soft-jobs-api-03-1911.webp 1911w" sizes="(max-width: 900px) 100vw, 60vw" loading="lazy" decoding="async" alt="Soft Jobs API gestión de usuarios y control de acceso" /></button>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#sceneSoftJobs" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
+                <button class="carousel-control-next" type="button" data-bs-target="#sceneSoftJobs" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
               </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="./assets/images/mi-pokedex-01-1280.webp" srcset="./assets/images/mi-pokedex-01-640.webp 640w, ./assets/images/mi-pokedex-01-1280.webp 1280w, ./assets/images/mi-pokedex-01-1901.webp 1901w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Mi Pokédex vista principal" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/mi-pokedex-02-1280.webp" srcset="./assets/images/mi-pokedex-02-640.webp 640w, ./assets/images/mi-pokedex-02-1280.webp 1280w, ./assets/images/mi-pokedex-02-1900.webp 1900w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Mi Pokédex detalle de búsqueda" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/mi-pokedex-03-1280.webp" srcset="./assets/images/mi-pokedex-03-640.webp 640w, ./assets/images/mi-pokedex-03-1280.webp 1280w, ./assets/images/mi-pokedex-03-1896.webp 1896w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Mi Pokédex estadísticas" />
-                </div>
+            </div>
+            <div class="project-body">
+              <span class="project-index">Proyecto destacado <span class="muted">· Backend</span></span>
+              <h3>Soft Jobs API</h3>
+              <div class="project-tags">
+                <span class="project-tag">Node.js</span>
+                <span class="project-tag">Express</span>
+                <span class="project-tag">JWT</span>
+                <span class="project-tag">PostgreSQL</span>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#scenePokedex" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
-              <button class="carousel-control-next" type="button" data-bs-target="#scenePokedex" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
+              <p>API de empleos junior con registro, login, contraseñas encriptadas y middlewares que separan lo público de lo que exige un token. Es la pieza que mejor explica cómo diseño un backend: no qué stack uso, sino dónde pongo las fronteras entre lo que un visitante puede leer y lo que solo un usuario autenticado puede tocar.</p>
+              <div class="project-links">
+                <a href="https://github.com/dieherram/dl-backend-con-node-y-express-autenticacion-y-autorizacion-de-usuarios-con-jwt" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
+                <span class="project-meta"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg> Roles y autenticación</span>
+              </div>
             </div>
-          </div>
-          <div class="scene-body">
-            <span class="scene-number">Escena 01</span>
-            <h3>Mi Pokédex</h3>
-            <div class="scene-tags">
-              <span class="scene-tag">JavaScript</span>
-              <span class="scene-tag">Bootstrap</span>
-              <span class="scene-tag">PokéAPI</span>
-            </div>
-            <p>Aplicación para buscar, registrar y visualizar estadísticas de Pokémon consumidos desde la PokéAPI, con persistencia local y gráficos interactivos de estadísticas base.</p>
-            <div class="scene-links">
-              <a href="https://github.com/dieherram/td-modulo-3-4-abp-pokedex" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
-              <span class="tag-label"><svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Curso</span>
-            </div>
-          </div>
-        </div>
+          </article>
 
-        <!-- SCENE 2: Alky Wallet -->
-        <div class="scene reveal">
-          <div class="scene-media">
-            <div id="sceneAlky" class="carousel slide">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#sceneAlky" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#sceneAlky" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#sceneAlky" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <!-- GRID — the four applications -->
+          <div class="project-grid">
+            <!-- Mamma Mia! -->
+            <article class="project project-card reveal">
+              <div class="project-media">
+                <div id="sceneMamma" class="carousel slide">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#sceneMamma" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Vista 1"></button>
+                    <button type="button" data-bs-target="#sceneMamma" data-bs-slide-to="1" aria-label="Vista 2"></button>
+                    <button type="button" data-bs-target="#sceneMamma" data-bs-slide-to="2" aria-label="Vista 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Mamma Mia!"><img src="./assets/images/mamma-mia-01-1280.webp" srcset="./assets/images/mamma-mia-01-640.webp 640w, ./assets/images/mamma-mia-01-1280.webp 1280w, ./assets/images/mamma-mia-01-1920.webp 1920w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Mamma Mia catálogo de pizzas" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Mamma Mia!"><img src="./assets/images/mamma-mia-02-1280.webp" srcset="./assets/images/mamma-mia-02-640.webp 640w, ./assets/images/mamma-mia-02-1280.webp 1280w, ./assets/images/mamma-mia-02-1920.webp 1920w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Mamma Mia detalle de producto" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Mamma Mia!"><img src="./assets/images/mamma-mia-03-1280.webp" srcset="./assets/images/mamma-mia-03-640.webp 640w, ./assets/images/mamma-mia-03-1280.webp 1280w, ./assets/images/mamma-mia-03-1898.webp 1898w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Mamma Mia carrito de compras" /></button>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#sceneMamma" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#sceneMamma" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
+                </div>
               </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="./assets/images/alky-wallet-01-1280.webp" srcset="./assets/images/alky-wallet-01-640.webp 640w, ./assets/images/alky-wallet-01-1280.webp 1280w, ./assets/images/alky-wallet-01-1896.webp 1896w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Alky Wallet login" />
+              <div class="project-body">
+                <span class="project-index">E-commerce <span class="muted">· React</span></span>
+                <h3>Mamma Mia!</h3>
+                <p>Catálogo, detalle y carrito con estado global en Context API y navegación con React Router. La arquitectura que exige un catálogo real: el carrito tiene que sobrevivir a la recarga.</p>
+                <div class="project-tags">
+                  <span class="project-tag">React</span>
+                  <span class="project-tag">Router</span>
+                  <span class="project-tag">Context API</span>
                 </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/alky-wallet-02-1280.webp" srcset="./assets/images/alky-wallet-02-640.webp 640w, ./assets/images/alky-wallet-02-1280.webp 1280w, ./assets/images/alky-wallet-02-1916.webp 1916w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Alky Wallet dashboard" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/alky-wallet-03-1280.webp" srcset="./assets/images/alky-wallet-03-640.webp 640w, ./assets/images/alky-wallet-03-1280.webp 1280w, ./assets/images/alky-wallet-03-1897.webp 1897w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Alky Wallet historial" />
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/dl-react-ii-trabajo-practico" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#sceneAlky" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
-              <button class="carousel-control-next" type="button" data-bs-target="#sceneAlky" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
-            </div>
-          </div>
-          <div class="scene-body">
-            <span class="scene-number">Escena 02</span>
-            <h3>Alky Wallet</h3>
-            <div class="scene-tags">
-              <span class="scene-tag">HTML5</span>
-              <span class="scene-tag">CSS3</span>
-              <span class="scene-tag">JavaScript</span>
-            </div>
-            <p>Simulador de billetera digital con inicio de sesión, depósitos, transferencias e historial de transacciones, validaciones de formulario y lógica frontend en un flujo de interacción clara.</p>
-            <div class="scene-links">
-              <a href="https://github.com/dieherram/td-modulo-2-abp-alky-wallet" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
-              <span class="tag-label"><svg class="icon" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg> Curso</span>
-            </div>
-          </div>
-        </div>
+            </article>
 
-        <!-- SCENE 3: Cócteles con React -->
-        <div class="scene reveal">
-          <div class="scene-media">
-            <div id="sceneCocteles" class="carousel slide">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#sceneCocteles" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#sceneCocteles" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#sceneCocteles" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <!-- Alky Wallet -->
+            <article class="project project-card reveal">
+              <div class="project-media">
+                <div id="sceneAlky" class="carousel slide">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#sceneAlky" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Vista 1"></button>
+                    <button type="button" data-bs-target="#sceneAlky" data-bs-slide-to="1" aria-label="Vista 2"></button>
+                    <button type="button" data-bs-target="#sceneAlky" data-bs-slide-to="2" aria-label="Vista 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Alky Wallet"><img src="./assets/images/alky-wallet-01-1280.webp" srcset="./assets/images/alky-wallet-01-640.webp 640w, ./assets/images/alky-wallet-01-1280.webp 1280w, ./assets/images/alky-wallet-01-1896.webp 1896w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Alky Wallet pantalla de inicio de sesión" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Alky Wallet"><img src="./assets/images/alky-wallet-02-1280.webp" srcset="./assets/images/alky-wallet-02-640.webp 640w, ./assets/images/alky-wallet-02-1280.webp 1280w, ./assets/images/alky-wallet-02-1916.webp 1916w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Alky Wallet panel de la billetera" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Alky Wallet"><img src="./assets/images/alky-wallet-03-1280.webp" srcset="./assets/images/alky-wallet-03-640.webp 640w, ./assets/images/alky-wallet-03-1280.webp 1280w, ./assets/images/alky-wallet-03-1897.webp 1897w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Alky Wallet historial de movimientos" /></button>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#sceneAlky" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#sceneAlky" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
+                </div>
               </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="./assets/images/cocteles-react-01-1280.webp" srcset="./assets/images/cocteles-react-01-640.webp 640w, ./assets/images/cocteles-react-01-1280.webp 1280w, ./assets/images/cocteles-react-01-1898.webp 1898w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Cócteles con React inicio" />
+              <div class="project-body">
+                <span class="project-index">Billetera digital <span class="muted">· JavaScript</span></span>
+                <h3>Alky Wallet</h3>
+                <p>Login, depósitos, transferencias e historial con validaciones en cada paso. El reto no era el CRUD sino que el flujo se sintiera claro: cada acción tiene su estado de carga, su error y su confirmación.</p>
+                <div class="project-tags">
+                  <span class="project-tag">HTML5</span>
+                  <span class="project-tag">CSS3</span>
+                  <span class="project-tag">JavaScript</span>
                 </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/cocteles-react-02-1280.webp" srcset="./assets/images/cocteles-react-02-640.webp 640w, ./assets/images/cocteles-react-02-1280.webp 1280w, ./assets/images/cocteles-react-02-1895.webp 1895w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Cócteles con React filtrado" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/cocteles-react-03-1280.webp" srcset="./assets/images/cocteles-react-03-640.webp 640w, ./assets/images/cocteles-react-03-1280.webp 1280w, ./assets/images/cocteles-react-03-1891.webp 1891w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Cócteles con React detalle" />
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/td-modulo-2-abp-alky-wallet" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#sceneCocteles" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
-              <button class="carousel-control-next" type="button" data-bs-target="#sceneCocteles" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
-            </div>
-          </div>
-          <div class="scene-body">
-            <span class="scene-number">Escena 03</span>
-            <h3>Cócteles con React</h3>
-            <div class="scene-tags">
-              <span class="scene-tag">React</span>
-              <span class="scene-tag">Bootstrap</span>
-              <span class="scene-tag">API</span>
-            </div>
-            <p>Aplicación que consume una API pública de cócteles, con búsqueda, filtrado por categoría y selección al azar, desarrollada con componentes reutilizables y diseño responsivo.</p>
-            <div class="scene-links">
-              <a href="https://github.com/dieherram/dl-react-i-consumo-de-apis-con-react" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
-              <span class="tag-label"><svg class="icon" viewBox="0 0 24 24"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg> Paralelo</span>
-            </div>
-          </div>
-        </div>
+            </article>
 
-        <!-- SCENE 4: Mamma Mia! -->
-        <div class="scene reveal">
-          <div class="scene-media">
-            <div id="sceneMamma" class="carousel slide">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#sceneMamma" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#sceneMamma" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#sceneMamma" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <!-- Mi Pokédex -->
+            <article class="project project-card reveal">
+              <div class="project-media">
+                <div id="scenePokedex" class="carousel slide">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#scenePokedex" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Vista 1"></button>
+                    <button type="button" data-bs-target="#scenePokedex" data-bs-slide-to="1" aria-label="Vista 2"></button>
+                    <button type="button" data-bs-target="#scenePokedex" data-bs-slide-to="2" aria-label="Vista 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Mi Pokédex"><img src="./assets/images/mi-pokedex-01-1280.webp" srcset="./assets/images/mi-pokedex-01-640.webp 640w, ./assets/images/mi-pokedex-01-1280.webp 1280w, ./assets/images/mi-pokedex-01-1901.webp 1901w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Mi Pokédex vista principal" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Mi Pokédex"><img src="./assets/images/mi-pokedex-02-1280.webp" srcset="./assets/images/mi-pokedex-02-640.webp 640w, ./assets/images/mi-pokedex-02-1280.webp 1280w, ./assets/images/mi-pokedex-02-1900.webp 1900w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Mi Pokédex búsqueda por nombre o número" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Mi Pokédex"><img src="./assets/images/mi-pokedex-03-1280.webp" srcset="./assets/images/mi-pokedex-03-640.webp 640w, ./assets/images/mi-pokedex-03-1280.webp 1280w, ./assets/images/mi-pokedex-03-1896.webp 1896w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Mi Pokédex gráfico de estadísticas base" /></button>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#scenePokedex" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#scenePokedex" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
+                </div>
               </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="./assets/images/mamma-mia-01-1280.webp" srcset="./assets/images/mamma-mia-01-640.webp 640w, ./assets/images/mamma-mia-01-1280.webp 1280w, ./assets/images/mamma-mia-01-1920.webp 1920w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Mamma Mia catálogo" />
+              <div class="project-body">
+                <span class="project-index">Consumo de API <span class="muted">· JavaScript</span></span>
+                <h3>Mi Pokédex</h3>
+                <p>Busca y registra Pokémon desde la PokéAPI, guarda el estado en el navegador y grafica las estadísticas base: una API de terceros convertida en información que el usuario puede leer y comparar.</p>
+                <div class="project-tags">
+                  <span class="project-tag">JavaScript</span>
+                  <span class="project-tag">Bootstrap</span>
+                  <span class="project-tag">PokéAPI</span>
                 </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/mamma-mia-02-1280.webp" srcset="./assets/images/mamma-mia-02-640.webp 640w, ./assets/images/mamma-mia-02-1280.webp 1280w, ./assets/images/mamma-mia-02-1920.webp 1920w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Mamma Mia detalle" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/mamma-mia-03-1280.webp" srcset="./assets/images/mamma-mia-03-640.webp 640w, ./assets/images/mamma-mia-03-1280.webp 1280w, ./assets/images/mamma-mia-03-1898.webp 1898w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Mamma Mia carrito" />
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/td-modulo-3-4-abp-pokedex" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#sceneMamma" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
-              <button class="carousel-control-next" type="button" data-bs-target="#sceneMamma" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
-            </div>
-          </div>
-          <div class="scene-body">
-            <span class="scene-number">Escena 04</span>
-            <h3>Mamma Mia!</h3>
-            <div class="scene-tags">
-              <span class="scene-tag">React</span>
-              <span class="scene-tag">Router</span>
-              <span class="scene-tag">Context API</span>
-            </div>
-            <p>E-commerce de pizzas con catálogo, detalle del producto y carrito de compras, usando React Router para ruteo y Context API para la gestión del estado global.</p>
-            <div class="scene-links">
-              <a href="https://github.com/dieherram/dl-react-ii-trabajo-practico" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
-              <span class="tag-label"><svg class="icon" viewBox="0 0 24 24"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg> Paralelo</span>
-            </div>
-          </div>
-        </div>
+            </article>
 
-        <!-- SCENE 5: Soft Jobs API -->
-        <div class="scene reveal">
-          <div class="scene-media">
-            <div id="sceneSoftJobs" class="carousel slide">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#sceneSoftJobs" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#sceneSoftJobs" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#sceneSoftJobs" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <!-- Cócteles con React -->
+            <article class="project project-card reveal">
+              <div class="project-media">
+                <div id="sceneCocteles" class="carousel slide">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#sceneCocteles" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Vista 1"></button>
+                    <button type="button" data-bs-target="#sceneCocteles" data-bs-slide-to="1" aria-label="Vista 2"></button>
+                    <button type="button" data-bs-target="#sceneCocteles" data-bs-slide-to="2" aria-label="Vista 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Cócteles con React"><img src="./assets/images/cocteles-react-01-1280.webp" srcset="./assets/images/cocteles-react-01-640.webp 640w, ./assets/images/cocteles-react-01-1280.webp 1280w, ./assets/images/cocteles-react-01-1898.webp 1898w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Cócteles con React pantalla de inicio" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Cócteles con React"><img src="./assets/images/cocteles-react-02-1280.webp" srcset="./assets/images/cocteles-react-02-640.webp 640w, ./assets/images/cocteles-react-02-1280.webp 1280w, ./assets/images/cocteles-react-02-1895.webp 1895w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Cócteles con React filtrado por categoría" /></button>
+                    </div>
+                    <div class="carousel-item">
+                      <button class="media-open" type="button" aria-label="Ampliar capturas de Cócteles con React"><img src="./assets/images/cocteles-react-03-1280.webp" srcset="./assets/images/cocteles-react-03-640.webp 640w, ./assets/images/cocteles-react-03-1280.webp 1280w, ./assets/images/cocteles-react-03-1891.webp 1891w" sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 550px" loading="lazy" decoding="async" alt="Cócteles con React detalle de una receta" /></button>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#sceneCocteles" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#sceneCocteles" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
+                </div>
               </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="./assets/images/soft-jobs-api-01-1280.webp" srcset="./assets/images/soft-jobs-api-01-640.webp 640w, ./assets/images/soft-jobs-api-01-1280.webp 1280w, ./assets/images/soft-jobs-api-01-1911.webp 1911w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Soft Jobs API documentación" />
+              <div class="project-body">
+                <span class="project-index">Componentes <span class="muted">· React</span></span>
+                <h3>Cócteles con React</h3>
+                <p>Búsqueda, filtrado por categoría y selección al azar sobre una API pública, resuelto con componentes reutilizables. Demuestra el salto de escribir lógica en cada vista a componer una interfaz que se extiende sin duplicarse.</p>
+                <div class="project-tags">
+                  <span class="project-tag">React</span>
+                  <span class="project-tag">Bootstrap</span>
+                  <span class="project-tag">API</span>
                 </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/soft-jobs-api-02-1280.webp" srcset="./assets/images/soft-jobs-api-02-640.webp 640w, ./assets/images/soft-jobs-api-02-1280.webp 1280w, ./assets/images/soft-jobs-api-02-1913.webp 1913w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Soft Jobs API auth" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/soft-jobs-api-03-1280.webp" srcset="./assets/images/soft-jobs-api-03-640.webp 640w, ./assets/images/soft-jobs-api-03-1280.webp 1280w, ./assets/images/soft-jobs-api-03-1911.webp 1911w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Soft Jobs API flujo de usuarios" />
+                <div class="project-links">
+                  <a href="https://github.com/dieherram/dl-react-i-consumo-de-apis-con-react" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#sceneSoftJobs" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
-              <button class="carousel-control-next" type="button" data-bs-target="#sceneSoftJobs" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
-            </div>
+            </article>
           </div>
-          <div class="scene-body">
-            <span class="scene-number">Escena 05</span>
-            <h3>Soft Jobs API</h3>
-            <div class="scene-tags">
-              <span class="scene-tag">Node.js</span>
-              <span class="scene-tag">Express</span>
-              <span class="scene-tag">JWT</span>
-            </div>
-            <p>API backend para una plataforma de empleos junior con autenticación por JWT, contraseñas encriptadas, gestión de usuarios y middlewares de autorización.</p>
-            <div class="scene-links">
-              <a href="https://github.com/dieherram/dl-backend-con-node-y-express-autenticacion-y-autorizacion-de-usuarios-con-jwt" target="_blank" rel="noreferrer">Ver repositorio <svg class="icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
-              <span class="tag-label"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg> Backend</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- SCENE 6: De Vanilla JS a React -->
-        <div class="scene reveal">
-          <div class="scene-media">
-            <div id="sceneVanilla" class="carousel slide">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#sceneVanilla" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#sceneVanilla" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#sceneVanilla" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="./assets/images/cocteles-react-01-1280.webp" srcset="./assets/images/cocteles-react-01-640.webp 640w, ./assets/images/cocteles-react-01-1280.webp 1280w, ./assets/images/cocteles-react-01-1898.webp 1898w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Caso de estudio React" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/alky-wallet-01-1280.webp" srcset="./assets/images/alky-wallet-01-640.webp 640w, ./assets/images/alky-wallet-01-1280.webp 1280w, ./assets/images/alky-wallet-01-1896.webp 1896w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Caso de estudio Alky Wallet" />
-                </div>
-                <div class="carousel-item">
-                  <img src="./assets/images/cocteles-react-02-1280.webp" srcset="./assets/images/cocteles-react-02-640.webp 640w, ./assets/images/cocteles-react-02-1280.webp 1280w, ./assets/images/cocteles-react-02-1895.webp 1895w" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async" alt="Comparación de arquitectura" />
-                </div>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#sceneVanilla" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Anterior</span></button>
-              <button class="carousel-control-next" type="button" data-bs-target="#sceneVanilla" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Siguiente</span></button>
+          <!-- STRIP — the case study, as the door into Act III -->
+          <article class="project project-strip reveal">
+            <div>
+              <span class="project-index">Caso de estudio <span class="muted">· Arquitectura</span></span>
+              <p class="strip-title">De Vanilla JS a React</p>
+              <p>Rehacer un proyecto no fue cambiar sintaxis, fue cambiar la forma de pensar la interfaz: cinco páginas con lógica duplicada colapsan en una vista con cuatro componentes reutilizables y alrededor de 90% menos duplicación funcional.</p>
             </div>
-          </div>
-          <div class="scene-body">
-            <span class="scene-number">Escena 06</span>
-            <h3>De Vanilla JS a React</h3>
-            <div class="scene-tags">
-              <span class="scene-tag">React</span>
-              <span class="scene-tag">UX</span>
-              <span class="scene-tag">Arquitectura</span>
-            </div>
-            <p>Caso de estudio que compara la lógica de la app de cócteles construida con React y un proyecto previo realizado en JavaScript vanilla, resaltando la evolución de la arquitectura frontend.</p>
-            <div class="scene-links">
-              <a href="#caso-estudio">Leer análisis <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-              <span class="tag-label"><svg class="icon" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> Estrategia</span>
-            </div>
-          </div>
+            <a class="btn-strip" href="#caso-estudio">Leer el análisis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </article>
         </div>
       </section>
 
@@ -1509,7 +2060,7 @@
       <!-- ===== CONTACT RESOLUTION ===== -->
       <section class="act-resolution" id="contacto">
         <div class="container-narrow">
-          <div class="resolution-box reveal-scale">
+          <div class="resolution-box on-navy reveal-scale">
             <div>
               <span class="act-label">Resolución</span>
               <h3>¿Buscas un perfil que combine desarrollo, UX y visión de negocio?</h3>
@@ -1526,7 +2077,7 @@
     </main>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="site-footer">
+    <footer class="site-footer on-navy">
       <div class="container-narrow footer-inner">
         <div class="footer-brand">
           <svg class="footer-logo" viewBox="0 0 2010 2010" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1552,7 +2103,7 @@
     </footer>
 
     <!-- ===== PROJECT LIGHTBOX MODAL ===== -->
-    <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Vista ampliada del proyecto">
+    <div class="lightbox-modal on-navy" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Vista ampliada del proyecto">
       <div class="lightbox-overlay" id="lightboxOverlay"></div>
       <div class="lightbox-container">
         <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar vista ampliada">
@@ -1562,7 +2113,23 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
         <div class="lightbox-content">
-          <img class="lightbox-image" id="lightboxImage" alt="" />
+          <!-- A 1x1 transparent PNG, not an empty src: an <img> with no src makes
+               Chrome request the document URL, which spends a request to render
+               nothing. openLightbox() overwrites it before the modal is shown. -->
+          <img class="lightbox-image" id="lightboxImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />
+          <!-- The failure state, and the reason it is not just an empty frame: the
+               full-size JPEG is a second request for a file the grid never loaded
+               (the grid serves responsive WebP), so a missing original, a dropped
+               connection or an expired cache leaves the visitor staring at the
+               footer with a hole above it. The name, the description and the counter
+               are what still identify the project, so they stay and the hole says
+               what happened and offers the way out. -->
+          <div class="lightbox-error" id="lightboxError" role="status" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            <p class="lightbox-error-title">No se pudo cargar la captura</p>
+            <p class="lightbox-error-note">La imagen a tamaño completo no respondió. El proyecto y su repositorio siguen aquí.</p>
+            <button class="lightbox-retry" id="lightboxRetry" type="button">Reintentar</button>
+          </div>
         </div>
         <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Imagen siguiente">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -1603,22 +2170,47 @@
         reveals.forEach(function(el) { observer.observe(el); });
       })();
 
-      /* ===== HERO BACKGROUND VIDEO — adaptive load =====
+      /* ===== HERO BACKGROUND VIDEO — adaptive load, video-as-background =====
          The shipped file, read out of the container: 1280x720 H.264 High@L4.0, 17.0 s,
          4.00 MiB, video only (1.97 Mbps), keyframe every 2 s and `moov` as the second
          box, so the first frame needs only the first 0.34 MiB. Those numbers are the
          reason the gate below can stay simple — see README for how they were produced
          and measured (VMAF 92.3 against the original with the scrim applied).
          It loads only when all of this holds:
-           1. prefers-reduced-motion is not set (CSS also hides the element)
-           2. Data Saver is off, and the link is not 2g / slow-2g / under 2 Mbps
-           3. window `load` has already fired, so fonts and the LCP are never delayed
-           4. the first frame arrives within DEADLINE. If it does not, the element is
-              dropped and the hero keeps its gradient for good. At 0.34 MiB to first
-              frame this only fires on a link under ~0.3 Mbps, but it costs nothing to
-              keep: a hero that changes its mind 12 s after landing is worse than a hero
-              that never had a video.
-         Otherwise the hero keeps its gradient, which is a complete hero on its own. */
+           1. window `load` has already fired, so fonts and the LCP are never delayed
+           2. the visitor has not declared otherwise: no `prefers-reduced-motion`
+              (CSS also hides the element), no Data Saver, and no self-declared
+              2g / slow-2g. Those three are statements of intent, and the right
+              answer to a statement of intent is a hero with no video.
+           3. the first frame arrives. If it does not — 404, decode error, a fetch
+              that dries up, or nothing at all by DEADLINE — the video is dropped and
+              the gradient floor is the hero for good. Nothing here waits out the
+              deadline when the browser already knows the answer, so a broken asset
+              path fails in the second it breaks instead of twelve.
+
+         `navigator.connection.downlink` used to be the fourth condition, and it is
+         the reason this hero kept shipping a gradient on links that were fine. It
+         is not a statement of intent: it is Chrome's clamped running estimate of
+         the connection, and it read **1.7 Mbps** on a loopback server that then
+         served the whole 4 MiB file in about two seconds. A guess is not grounds
+         for deleting the feature — and because nothing here ever calls
+         `loadVideo` twice, the guess was permanent, and because it logged nothing
+         it was also invisible: a policy that declined and an asset that 404d
+         arrived at exactly the same empty hero. It keeps a job, but not this one —
+         see `refusal()` for what still refuses and `starved()` for what the number
+         is now allowed to decide.
+
+         Every outcome names itself on the console, and `?video=1` / `?video=0` in
+         the URL forces either way, because the page ships as the repository and
+         the owner has to be able to look at the hero's real state from whatever
+         machine they are on. `?video=1` cannot buy back reduced motion: that is
+         not a connection budget, and a URL that switches it off is a footgun aimed
+         at the wrong person.
+
+         The floor is not a second background underneath the video. It is what the
+         hero is while the 0.34 MiB is in the air and what it stays when the file
+         never arrives; `.has-video` fades it out on the same clock as the video
+         fades in, and `abandon()` is the one exit every failure takes. */
       (function() {
         var hero = document.querySelector('.hero');
         var video = document.getElementById('heroVideo');
@@ -1628,19 +2220,36 @@
         var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         var connection = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
         var TOO_SLOW = { 'slow-2g': true, '2g': true };
-        var MIN_DOWNLINK = 2; // Mbps — below this, a 4 MiB background is not worth it
         var DEADLINE = 12000;
+        var STARVED_DOWNLINK = 1; // Mbps — not a veto, just a shorter fuse
+        var STARVED_DEADLINE = 4500;
+        var override = (function() {
+          var m = /[?&]video=(1|0|on|off)\b/.exec(window.location.search);
+          if (!m) return null;
+          return /^(1|on)$/.test(m[1]) ? 'on' : 'off';
+        })();
         var requested = false;
         var revealed = false;
         var userPaused = false;
         var dead = false;
         var giveUp = 0;
+        var startedAt = 0;
+
+        /* A policy that declines and an asset that 404s look identical on screen,
+           and the difference is the whole reason the hero kept looking broken. One
+           line each, with the reason, is the difference between a five-second
+           diagnosis and guessing. */
+        function note(message) {
+          if (window.console && console.info) console.info('[hero video] ' + message);
+        }
 
         /* `pause()` alone keeps the download alive, so cancelling means clearing the
            sources and reloading — that drops the in-flight fetch. The classes go too:
            if the video disappears, the scrim and the pause button have to go with it,
-           or the hero is left with a control wired to a detached element. */
-        function abandon() {
+           or the hero is left with a control wired to a detached element. Nothing
+           here is revealed yet on the failure paths that matter, so the floor simply
+           never stops being the background. */
+        function abandon(reason) {
           if (dead) return;
           dead = true;
           window.clearTimeout(giveUp);
@@ -1651,15 +2260,71 @@
           video.classList.remove('ready');
           hero.classList.remove('has-video');
           video.remove();
+          note('abandoned — ' + reason + (startedAt ? ', ' + Math.round(performance.now() - startedAt) + 'ms in' : ''));
         }
 
-        function withinBudget() {
-          if (motionQuery.matches) return false;
-          if (connection && connection.saveData) return false;
-          if (connection && TOO_SLOW[connection.effectiveType]) return false;
-          if (connection && typeof connection.downlink === 'number' &&
-              connection.downlink > 0 && connection.downlink < MIN_DOWNLINK) return false;
-          return true;
+        /* Every way the file can fail to arrive lands here, and none of them waits
+           for the deadline first. Before the first frame is on screen there is
+           nothing to lose by giving up: the floor is already the hero, and a
+           background that changes its mind ten seconds after landing is worse than
+           one that never had a video. After the reveal it is all no-op — the
+           buffered frame keeps painting through a hiccup, and stripping the
+           background out from under a visitor who is reading it is not a recovery. */
+        function failBeforeReveal(reason) {
+          /* Nothing failed if nothing was asked for. An unpromoted `<source>` has no
+             path, and the browser is entitled to say so on its own schedule — which
+             is how a page that had declined politely could still log a broken file a
+             moment later, and how a healthy page could mark itself dead before the
+             gate had finished thinking. */
+          if (!requested || revealed || dead) return;
+          abandon(reason || 'failed before the first frame');
+        }
+
+        /* A decline has to settle the video, not merely decline it, and the two
+           halves of that are separate fixes. The per-`<source>` listener is attached
+           at promotion, so an unpromoted source cannot accuse a broken path; what is
+           left is the *ordering* — the `<video>`-level error can still arrive before
+           the gate has decided, and if it set `dead` there, a page that was about to
+           play would have marked itself broken first. Settling the refusal closes
+           that window, so the decline is the whole story and the diagnostic still
+           means something when it does fire. The element is deliberately left where
+           it is: reduced motion hides it with CSS, and nobody else cares. */
+        function decline(reason) {
+          if (dead) return;
+          dead = true;
+          note('declined — ' + reason);
+        }
+
+        /* What the visitor DECLARED, and therefore what the hero obeys. Reduced
+           motion, Data Saver and a self-declared 2G are statements of intent.
+           `downlink` is not on this list and that is the fix: it is a clamped
+           running guess about the connection rather than a statement about this
+           file, so a link that is plainly fast enough still reads under the floor
+           and the hero loses its video with nothing to show for it. The paths that
+           do hold evidence already cover the link that cannot deliver — `error` at
+           both the <source> and the <video>, `stalled` at 3s, DEADLINE underneath
+           for the server that neither errors nor stalls. */
+        function refusal() {
+          if (override === 'off') return 'forced off by ?video=0';
+          if (motionQuery.matches) return 'prefers-reduced-motion';
+          /* `?video=1` buys back the two *link* declarations, which cost the visitor
+             bandwidth and are a statement about the connection rather than about
+             their body. It stops here on purpose: reduced motion is not a budget,
+             and a URL that switches it off is a footgun aimed at the wrong person. */
+          if (override === 'on') return null;
+          if (connection && connection.saveData) return 'Data Saver';
+          if (connection && TOO_SLOW[connection.effectiveType]) return connection.effectiveType;
+          return null;
+        }
+
+        /* Where `downlink` earns its keep: not a verdict, a fuse. If the connection
+           is rated this starved, the same first frame is worth less of the
+           visitor's patience, so we stop waiting for it sooner. The request still
+           goes out — a number this pessimistic is exactly the case where guessing
+           would have been wrong. */
+        function starved() {
+          return !!(connection && typeof connection.downlink === 'number' &&
+                    connection.downlink > 0 && connection.downlink < STARVED_DOWNLINK);
         }
 
         function requestPlayback() {
@@ -1668,14 +2333,28 @@
           if (attempt && typeof attempt.catch === 'function') {
             // Autoplay blocked (low-power mode, strict policy): drop the element
             // so nothing keeps decoding behind the gradient.
-            attempt.catch(abandon);
+            attempt.catch(function() { abandon('autoplay refused by the browser'); });
           }
         }
 
         function loadVideo() {
-          if (requested || dead || !withinBudget()) return;
+          var blocked = refusal();
+          if (blocked) { decline(blocked); return; }
+          if (requested || dead) return;
           requested = true;
-          var sources = video.querySelectorAll('source[data-src]');
+          startedAt = performance.now();
+          /* The per-`<source>` error listener is attached here, and not one line
+             earlier, because until this moment the source has no path and cannot
+             miss one. Wired at parse time it fires on its own schedule — before
+             the gate has decided, or after it has declined — and every one of those
+             firings is a false accusation of a broken file. Wired here it can only
+             mean what it says. */
+          var sources = video.querySelectorAll('source');
+          for (var s = 0; s < sources.length; s++) {
+            sources[s].addEventListener('error', function() {
+              failBeforeReveal('the file did not arrive — check the path');
+            });
+          }
           for (var i = 0; i < sources.length; i++) {
             sources[i].src = sources[i].getAttribute('data-src');
             sources[i].removeAttribute('data-src');
@@ -1683,8 +2362,8 @@
           video.muted = true; // Safari only honours the property, not just the attribute
           video.load();
           giveUp = window.setTimeout(function() {
-            if (!revealed) abandon();
-          }, DEADLINE);
+            if (!revealed) abandon('no first frame by the deadline');
+          }, starved() ? STARVED_DEADLINE : DEADLINE);
           requestPlayback();
         }
 
@@ -1705,11 +2384,51 @@
           revealed = true;
           video.classList.add('ready');
           hero.classList.add('has-video');
+          note('playing — first frame in ' + Math.round(performance.now() - startedAt) + 'ms');
         });
+
+        /* The three failure signals, attached before a single source is promoted.
+           A dead asset path on GitHub Pages is the ordinary case, not the exotic
+           one, and it is reported twice: `error` at the <source> that failed and
+           `error` at the <video> that could not choose it. Neither bubbles to the
+           other, so both are wired. MEDIA_ERR_ABORTED is read and dropped — nothing
+           in this file aborts the media, and treating it as a failure would strip
+           the background over a seek. `stalled` is three seconds of fetch with no
+           new bytes, which on a link the gate already cleared means the file is not
+           coming; DEADLINE stays underneath for the server that neither errors nor
+           stalls. `waiting` is deliberately not here: Chrome fires it the moment
+           play() is called on a video with no data yet, so counting it would fail
+           every healthy load. */
+        video.addEventListener('error', function() {
+          if (!requested || dead) return;
+          if (!video.error || video.error.code !== 1) {
+            failBeforeReveal('the file could not be decoded (code ' + (video.error ? video.error.code : '?') + ')');
+          }
+        });
+        video.addEventListener('stalled', function() {
+          failBeforeReveal('the fetch dried up');
+        });
+
+        /* The control's name has to follow the element rather than the click that
+           set it: the video is also paused by the hero leaving the viewport, by the
+           tab going behind, and by the lightbox opening, and a button that still
+           says "Pausar" over a video that is not running is a control that lies
+           about the one thing it exists to control (WCAG 2.2.2). */
+        function syncToggle() {
+          if (!toggle) return;
+          var stopped = video.paused;
+          toggle.classList.toggle('is-paused', stopped);
+          toggle.setAttribute('aria-label', stopped ? 'Reproducir video de fondo' : 'Pausar video de fondo');
+          toggle.querySelector('span').textContent = stopped ? 'Reproducir' : 'Pausar';
+        }
+        video.addEventListener('play', syncToggle);
+        video.addEventListener('pause', syncToggle);
 
         /* The button names the action, not the state: it reads "Pausar video de fondo"
            while the video runs and "Reproducir video de fondo" once stopped. No
-           aria-pressed on top of a swapping name — that is the double-state trap. */
+           aria-pressed on top of a swapping name — that is the double-state trap.
+           Both branches re-label themselves off the media events above, which is why
+           neither one writes the label here. */
         if (toggle) {
           toggle.addEventListener('click', function() {
             if (video.paused) {
@@ -1719,10 +2438,6 @@
               userPaused = true;
               video.pause();
             }
-            var stopped = video.paused;
-            toggle.classList.toggle('is-paused', stopped);
-            toggle.setAttribute('aria-label', stopped ? 'Reproducir video de fondo' : 'Pausar video de fondo');
-            toggle.querySelector('span').textContent = stopped ? 'Reproducir' : 'Pausar';
           });
         }
 
@@ -1745,25 +2460,48 @@
           new IntersectionObserver(syncPlayback, { threshold: 0 }).observe(hero);
         }
         document.addEventListener('visibilitychange', syncPlayback);
+        /* Back/forward cache: a phone that opens a repository from the hero and then
+           comes back restores the page as it was, and the OS is free to have stopped
+           the video while it was away. Re-applying the policy on restore is the
+           difference between a hero that comes back alive and one frozen on a stale
+           frame, and `syncPlayback` still honours a pause the visitor asked for. */
+        window.addEventListener('pageshow', function(event) {
+          if (event.persisted) syncPlayback();
+        });
         if (motionQuery.addEventListener) {
           motionQuery.addEventListener('change', function() {
-            if (motionQuery.matches) abandon();
+            if (motionQuery.matches) abandon('prefers-reduced-motion, switched on mid-session');
           });
         }
-        // A connection that degrades mid-download gets the same treatment as one that
-        // was already bad when the page loaded.
+        /* A connection that degrades mid-download gets the same treatment as one that
+           was already bad when the page loaded — and it is re-judged with the same
+           rule, so a `change` that reports a healthier link does not bring the
+           video back after `abandon()` has already dropped it. */
         if (connection && connection.addEventListener) {
           connection.addEventListener('change', function() {
             if (!requested || dead) return;
-            if (!withinBudget()) abandon();
+            var blocked = refusal();
+            if (blocked) abandon(blocked + ', switched on mid-session');
             else syncPlayback();
           });
         }
       })();
 
-      /* ===== NAVBAR SCROLL STATE ===== */
+      /* ===== NAVBAR SCROLL STATE =====
+         The bar is brand navy in both states, so the one thing it must never do is
+         be a pale wash for a moment while it fades: the links are --slate-400,
+         which is legal on navy and illegal on the mist canvas, and a 0.94 navy
+         half-faded over that canvas composites to a light grey the links cannot
+         survive. The fade itself is fine, because it happens while the hero — also
+         navy — is still behind the bar, so it composites navy onto navy. The moment
+         the canvas can reach the bar is the moment the fade has to be over, and
+         that is what `.on-canvas` is for: past it the bar stops being a fade and is
+         a solid plate, applied with no transition, in the same frame the canvas
+         arrives. A jump (a hash on load, a momentum flick, a restored scroll
+         position) therefore never gets to show a mid-tone either. */
       (function() {
         var navbar = document.getElementById('navbar');
+        var hero = document.getElementById('inicio');
         var scrollThreshold = 80;
         function updateNavbar() {
           if (window.scrollY > scrollThreshold) {
@@ -1771,24 +2509,93 @@
           } else {
             navbar.classList.remove('scrolled');
           }
+          if (hero) {
+            /* The hero no longer covers the bar once the bar's bottom edge passes
+               the hero's bottom edge. */
+            var overCanvas = window.scrollY + navbar.offsetHeight >= hero.offsetHeight;
+            navbar.classList.toggle('on-canvas', overCanvas);
+          }
         }
         window.addEventListener('scroll', updateNavbar, { passive: true });
         updateNavbar();
       })();
 
-      /* ===== MOBILE NAV TOGGLE ===== */
+      /* ===== MOBILE NAV TOGGLE =====
+         Four ways out, because on a phone one of them is always the one the visitor
+         tries: the button (which now draws an X), the scrim, Escape, and picking a
+         destination. It also opens and closes like a dialog would — focus moves into
+         the panel, the page behind it stops scrolling, and focus comes back to the
+         button on close — and it gives up its state if the viewport grows past the
+         breakpoint, where the panel is a horizontal list and `.open` means nothing. */
       (function() {
+        var navbar = document.getElementById('navbar');
         var toggle = document.getElementById('navToggle');
         var links = document.getElementById('navLinks');
+        var scrim = document.getElementById('navScrim');
+        if (!navbar || !toggle || !links) return;
+
+        var isOpen = false;
+
+        function openMenu() {
+          isOpen = true;
+          links.classList.add('open');
+          navbar.classList.add('is-open');
+          toggle.setAttribute('aria-expanded', 'true');
+          toggle.setAttribute('aria-label', 'Cerrar menú');
+          document.body.classList.add('nav-open');
+          var first = links.querySelector('a');
+          if (first) first.focus();
+        }
+
+        function closeMenu(restoreFocus) {
+          if (!isOpen) return;
+          isOpen = false;
+          links.classList.remove('open');
+          navbar.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Abrir menú');
+          document.body.classList.remove('nav-open');
+          if (restoreFocus) toggle.focus();
+        }
+
         toggle.addEventListener('click', function() {
-          var isOpen = links.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', isOpen);
+          if (isOpen) closeMenu(false);
+          else openMenu();
         });
+
+        if (scrim) scrim.addEventListener('click', function() { closeMenu(true); });
+
         links.querySelectorAll('a').forEach(function(a) {
-          a.addEventListener('click', function() {
-            links.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-          });
+          a.addEventListener('click', function() { closeMenu(false); });
+        });
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && isOpen) {
+            e.preventDefault();
+            closeMenu(true);
+          }
+        });
+
+        /* Tab is kept inside the panel while it is open. Without this, Tab walks out
+           of the menu into the page behind it — the drawer looks modal and is not. */
+        links.addEventListener('keydown', function(e) {
+          if (e.key !== 'Tab' || !isOpen) return;
+          var focusables = links.querySelectorAll('a');
+          if (!focusables.length) return;
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        });
+
+        var desktop = window.matchMedia('(min-width: 769px)');
+        if (desktop.addEventListener) desktop.addEventListener('change', function(e) {
+          if (e.matches) closeMenu(false);
         });
       })();
 
@@ -1857,19 +2664,8 @@
             repo: 'https://github.com/dieherram/dl-backend-con-node-y-express-autenticacion-y-autorizacion-de-usuarios-con-jwt',
             images: [
               { src: './assets/images/01%20Soft%20Jobs%20API.jpg', alt: 'Soft Jobs API documentación' },
-              { src: './assets/images/02%20Soft%20Jobs%20API.jpg', alt: 'Soft Jobs API auth' },
+              { src: './assets/images/02%20Soft%20Jobs%20API.jpg', alt: 'Soft Jobs API autenticación' },
               { src: './assets/images/03%20Soft%20Jobs%20API.jpg', alt: 'Soft Jobs API flujo de usuarios' }
-            ]
-          },
-          sceneVanilla: {
-            name: 'De Vanilla JS a React',
-            desc: 'Caso de estudio que compara la lógica de la app de cócteles construida con React y un proyecto previo realizado en JavaScript vanilla, resaltando la evolución de la arquitectura frontend.',
-            tags: ['React', 'UX', 'Arquitectura'],
-            repo: '#caso-estudio',
-            images: [
-              { src: './assets/images/01%20Cocteles%20con%20React.jpg', alt: 'Caso de estudio React' },
-              { src: './assets/images/01%20Alky%20Wallet.jpg', alt: 'Caso de estudio Alky Wallet' },
-              { src: './assets/images/02%20Cocteles%20con%20React.jpg', alt: 'Comparación de arquitectura' }
             ]
           }
         };
@@ -1880,6 +2676,8 @@
         var prevBtn = document.getElementById('lightboxPrev');
         var nextBtn = document.getElementById('lightboxNext');
         var imageEl = document.getElementById('lightboxImage');
+        var errorEl = document.getElementById('lightboxError');
+        var retryBtn = document.getElementById('lightboxRetry');
         var nameEl = document.getElementById('lightboxProjectName');
         var descEl = document.getElementById('lightboxProjectDesc');
         var tagsEl = document.getElementById('lightboxProjectTags');
@@ -1889,6 +2687,19 @@
         var currentProject = null;
         var currentIndex = 0;
         var lastFocusedElement = null;
+
+        /* The controls the dialog can reach, read fresh on every keystroke rather
+           than cached: the two arrows leave the flow with display:none when a project
+           has a single screenshot, and focusing a display:none button is a silent
+           no-op — a cached list would walk Tab onto it and leave focus stranded
+           behind the dialog. getClientRects() is the runtime test, the same one the
+           CSS uses to decide what is on screen. */
+        function focusables() {
+          return Array.prototype.filter.call(
+            modal.querySelectorAll('a[href], button:not([disabled])'),
+            function(el) { return el.getClientRects().length > 0; }
+          );
+        }
 
         function openLightbox(projectId, imageIndex) {
           currentProject = projects[projectId];
@@ -1913,10 +2724,19 @@
         function updateContent() {
           if (!currentProject) return;
           var img = currentProject.images[currentIndex];
-          imageEl.classList.remove('loaded');
+          imageEl.classList.remove('loaded', 'failed');
+          errorEl.hidden = true;
+          /* Both handlers go on before the src does. A file already in cache can
+             finish between two statements, and a load that fires before onload is
+             assigned is a state the dialog has no way to leave. */
+          imageEl.onload = function() { imageEl.classList.add('loaded'); };
+          imageEl.onerror = function() {
+            imageEl.classList.add('loaded', 'failed');
+            imageEl.alt = 'Captura no disponible de ' + currentProject.name;
+            errorEl.hidden = false;
+          };
           imageEl.src = img.src;
           imageEl.alt = img.alt;
-          imageEl.onload = function() { imageEl.classList.add('loaded'); };
           nameEl.textContent = currentProject.name;
           descEl.textContent = currentProject.desc;
           tagsEl.innerHTML = currentProject.tags.map(function(t) {
@@ -1938,6 +2758,13 @@
         overlay.addEventListener('click', closeLightbox);
         prevBtn.addEventListener('click', function() { navigate(-1); });
         nextBtn.addEventListener('click', function() { navigate(1); });
+        retryBtn.addEventListener('click', function() {
+          /* Drop the element's own copy of the request before asking again, or a
+             404 the browser already has in hand is replayed from cache and the
+             retry cannot do anything. */
+          imageEl.removeAttribute('src');
+          updateContent();
+        });
 
         document.addEventListener('keydown', function(e) {
           if (!modal.classList.contains('active')) return;
@@ -1946,8 +2773,35 @@
           if (e.key === 'ArrowRight') navigate(1);
         });
 
-        document.querySelectorAll('.scene-media .carousel-item img').forEach(function(img) {
-          img.addEventListener('click', function() {
+        /* Tab is kept inside the dialog while it is open, on the same pattern the
+           mobile menu already uses: wrap at the first and last control and let the
+           browser handle everything in between. Without it, aria-modal="true" is a
+           promise the page does not keep — Tab walks out into the projects behind
+           the scrim, and Shift+Tab walks into the navbar. The list is read inside
+           the handler, so the hidden arrows and the retry button that only exists
+           on a failed load are both accounted for. */
+        modal.addEventListener('keydown', function(e) {
+          if (e.key !== 'Tab') return;
+          var list = focusables();
+          if (!list.length) return;
+          var first = list[0];
+          var last = list[list.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        });
+
+        /* The screenshots are <button class="media-open">, so the listener sits on
+           the button and `this.closest('.carousel')` still walks button → item →
+           carousel exactly as it did from the <img>. Only the starting point moved:
+           what the handler wants is the carousel the screenshot belongs to, and the
+           button is inside the same one. */
+        document.querySelectorAll('.project-media .media-open').forEach(function(btn) {
+          btn.addEventListener('click', function() {
             var carousel = this.closest('.carousel');
             var projectId = carousel.id;
             var activeItem = carousel.querySelector('.carousel-item.active');

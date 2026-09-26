@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2010 2010" role="img" aria-label="Diego Hernández">
   <title>Diego Hernández</title>
-  <!-- Tile: el navy del navbar. El marco del propio mark hace de borde, asi que
-       aqui solo hace falta rellenar el interior: el logo se lee entero. -->
-  <rect width="2010" height="2010" rx="470" fill="#0c1629"/>
-  <g fill="#f8f3ea" transform="translate(1005 1005) scale(0.86) translate(-1005 -1005)">
+  <!-- Tile: el navy de marca (#192A55, el del logo). El marco del propio mark hace de borde, asi que
+       aqui solo hace falta rellenar el interior: el logo se lee entero.
+       Monograma en --mist-200 #F2F2F2: 12.31:1 sobre el tile. -->
+  <rect width="2010" height="2010" rx="470" fill="#192A55"/>
+  <g fill="#F2F2F2" transform="translate(1005 1005) scale(0.86) translate(-1005 -1005)">
     <path d="M1511 46C1665.64 46 1791 171.36 1791 326V1500C1791 1654.64 1665.64 1780 1511 1780H314C159.36 1780 34 1654.64 34 1500V326C34 171.36 159.36 46 314 46H1511ZM806.927 445.637C800.301 357.52 723.498 291.459 635.381 298.084L214.568 329.725L311.854 1623.57L732.665 1591.93C820.782 1585.31 886.844 1508.5 880.219 1420.38L806.927 445.637ZM1319.79 238.486L1347.46 606.448L1188.9 618.369L1161.2 249.909L950.792 265.73L1048.08 1559.58L1259.48 1543.68L1207.37 850.639L1366.92 838.642L1419.03 1531.69L1630.43 1515.79L1533.19 222.441L1319.79 238.486Z"/>
     <path d="M445.33 517.953L556.018 509.63C578.047 507.974 597.248 524.49 598.904 546.519L659.262 1349.25C660.918 1371.28 644.403 1390.48 622.374 1392.14L511.686 1400.46L445.33 517.953Z"/>
     <path d="M1812.18 200.482C1902.89 246.81 1965 341.151 1965 450V1674C1965 1828.64 1839.64 1954 1685 1954H464C357.707 1954 265.248 1894.77 217.824 1807.52C255.986 1827.01 299.209 1838 345 1838H1566C1720.64 1838 1846 1712.64 1846 1558V334C1846 285.654 1833.75 240.169 1812.18 200.482Z"/>

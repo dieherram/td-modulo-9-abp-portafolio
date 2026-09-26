@@ -111,7 +111,9 @@ Tres decisiones que no son obvias:
 
 **Las imágenes se sirven a la medida.** Las 15 capturas pesan 2,8 MB en JPG. El atributo `sizes` declaraba la tarjeta en 502 px de ancho, cuando en realidad ocupa `50vw` en escritorio y `100vw` en móvil — 1920 px reales en un monitor retina. El navegador elegía un derivado de 1000 px y lo **escalaba 1,92×**: 2,8 MB entregados y una imagen más blanda que el original. Corregir la geometría y generar tres escalones reales (640 / 1280 / ancho nativo) dejó las seis escenas en **803 KB**.
 
-**El video del hero no se descarga solo.** Pesa 4 MB, así que solo se carga si el visitante no pidió movimiento reducido, no está en ahorro de datos, la conexión supera 2 Mbps, la página ya terminó de cargar y el primer fotograma llega en 12 segundos. Si algo falla, el hero conserva su gradiente. Se pausa al salir de pantalla, al cambiar de pestaña y al abrir una galería.
+**El video del hero es el fondo, y el gradiente es su plan B.** Pesa 4 MB, así que solo se carga si el visitante no pidió movimiento reducido, no está en ahorro de datos, no está en una red que él mismo declara 2G, y la página ya terminó de cargar. Mientras baja, o si algo falla — una ruta rota, un archivo que no decodifica, una conexión que se corta — el hero se queda con su gradiente navy, que es un hero completo por sí solo, y el control de pausa no aparece. Se pausa al salir de pantalla, al cambiar de pestaña y al abrir una galería.
+
+**Un hero sin video se ve igual que un video roto, así que la página lo dice.** La consola del navegador escribe una línea por cada resultado: `[hero video] declined — prefers-reduced-motion` cuando una decisión del visitante lo impide, `[hero video] abandoned — the file did not arrive — check the path` cuando el archivo falla, y `[hero video] playing — first frame in 33ms` cuando sí se ve. Para revisar cualquiera de los dos estados sin tocar el código, `?video=0` y `?video=1` en la URL fuerzan el gradiente y el video respectivamente.
 
 ## Ejecutar el proyecto
 
@@ -121,7 +123,7 @@ No requiere instalación ni compilación:
 npx serve .
 ```
 
-O abre `index.html` directamente en el navegador. Para que el video del hero funcione, conviene servirlo por HTTP en vez de abrirlo como archivo local.
+O abre `index.html` directamente en el navegador: el video del hero también funciona por `file://`.
 
 ## Contacto
 
